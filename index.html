@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-<head> 
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DSA Pattern Revision</title>
@@ -46,7 +46,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 var(--font-
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
 a{color:var(--accent)}
 code,kbd{font-family:var(--font-code);font-size:.86em}
-pre,code,.cell,.mono,.eq{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+pre,code,.cell,.mono,.eq,pre.jc{font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
 :not(pre)>code{background:var(--sunk);border:1px solid var(--line);border-radius:5px;padding:.05em .35em;white-space:nowrap}
 kbd{border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:0 .4em;background:var(--surface);color:var(--muted)}
 button{font:inherit;color:inherit}
@@ -153,6 +153,69 @@ pre{margin:0;overflow-x:auto;padding:4px 14px 14px;font:13px/1.55 var(--font-cod
 pre .kw{color:var(--c-kw)} pre .str{color:var(--c-str)} pre .num{color:var(--c-num)} pre .com{color:var(--c-com);font-style:italic}
 pre .ty{color:var(--c-type)} pre .fn{color:var(--c-fn)} pre .an{color:#bbb529}
 
+/* view switch */
+.vsw{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;height:38px}
+.vsw button{border:0;background:var(--surface);padding:0 12px;font-size:13px;font-weight:600;cursor:pointer;color:var(--muted)}
+.vsw button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+/* short-view table */
+.ft.st th:nth-child(1){width:42px}.ft.st th:nth-child(2){width:17%}.ft.st th:nth-child(3){width:25%}.ft.st th:nth-child(5){width:118px}
+.ft.st td.num{font:600 12px var(--font-code);color:var(--muted)}
+.ft.st td.m code{font-size:12px;white-space:normal}
+.tolong{border:0;background:none;padding:0;text-align:left;font:600 13.5px var(--font-body);color:var(--accent);cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:3px}
+.ft.st tr:target,.ft.st tr.flash{animation:flash 1.6s ease-out}
+/* flowchart */
+.flow{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.flow li{position:relative}
+.flow .fstart,.flow .fend{border-radius:999px;padding:6px 14px;font-size:13.5px;font-weight:600;background:var(--accent);color:var(--accent-ink)}
+.flow .fend{background:var(--sunk);color:var(--ink);font-weight:400;border:1px dashed var(--line);margin-top:6px;border-radius:10px}
+.flow .fstart{margin-bottom:22px}
+.flow .fstart::after{content:"";position:absolute;left:28px;top:100%;height:22px;border-left:2px solid var(--line)}
+.flow .fq{display:grid;grid-template-columns:minmax(0,340px) auto auto;align-items:center;gap:10px;padding-bottom:26px}
+.flow .fq::after{content:"";position:absolute;left:28px;top:calc(100% - 26px);height:26px;border-left:2px solid var(--line)}
+.flow .q{border:1.5px solid var(--accent);background:var(--accent-soft);color:var(--ink);padding:8px 12px;border-radius:10px;font-size:14px;transform:skewX(-6deg)}
+.flow .q{transform:none;border-radius:4px 14px 4px 14px}
+.flow .yes{font:600 12px var(--font-code);color:var(--ok);white-space:nowrap}
+.flow .ans{background:var(--ok-soft);color:var(--ok);border:1px solid var(--ok);border-radius:999px;padding:4px 12px;font-weight:600;font-size:13.5px;text-decoration:none;white-space:nowrap}
+.flow .ans:hover{filter:brightness(1.1);text-decoration:underline}
+.flow .no{position:absolute;left:36px;bottom:5px;font:600 11px var(--font-code);color:var(--muted)}
+.flowsec{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 18px 16px;margin-top:18px}
+.flowsec>h2{font-size:19px}
+@media (max-width:640px){ .flow .fq{grid-template-columns:minmax(0,1fr);gap:4px} .flow .yes{padding-left:4px} .flow .ans{justify-self:start;white-space:normal} }
+/* card as a table */
+.ct{width:100%;border-collapse:collapse;margin:10px 0 0;font-size:14.5px}
+.ct th,.ct td{border:0;border-top:1px solid var(--line);padding:8px 10px;vertical-align:top;text-align:left}
+.ct tr:first-child th,.ct tr:first-child td{border-top:0}
+.ct th{width:118px;background:none;color:var(--muted);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;font-weight:600;white-space:nowrap;padding-left:0}
+.ct td p{margin:0 0 6px}.ct td p:last-child{margin:0}
+.ct td ul,.ct td ol{margin:2px 0;padding-left:20px}
+.ct mark{background:linear-gradient(transparent 12%,var(--hl) 12%,var(--hl) 88%,transparent 88%);color:var(--hl-ink);padding:0 3px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.ct tr.w td{background:var(--warn-soft);border-radius:8px}
+.ct tr.w th{color:var(--warn)}
+.ct .probs{margin:0}
+.cxi{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px}
+.cxi code{font-size:12.5px}
+.cxi span{font-size:12px;color:var(--muted);margin-right:8px}
+/* reference tables with a code column */
+.ftw{border:1px solid var(--line);border-radius:12px;background:var(--surface);overflow:hidden;margin-top:8px}
+.ft{width:100%;border-collapse:collapse;font-size:14px;table-layout:fixed}
+.ft th{background:var(--sunk)}
+.ft td{border-bottom:1px solid var(--line);padding:8px 12px;vertical-align:top;overflow-wrap:anywhere}
+.ft tr:last-child td{border-bottom:0}
+.ft td.fn{font:600 13px var(--font-code);color:var(--accent)}
+.ft td.fn code{background:none;border:0;padding:0;color:inherit;white-space:normal}
+.ft td ul{margin:0;padding-left:18px}
+.ft td :not(pre)>code,.ft td>code,.ct td code{white-space:normal}
+.ft td.fc{padding:6px 8px}
+.ft col.c1{width:24%}
+pre.jc{margin:0;padding:7px 10px;border-radius:8px;background:var(--code-bg);color:var(--code-fg);font:12.5px/1.5 var(--font-code);white-space:pre-wrap;overflow-wrap:anywhere}
+.ft:not(.edge):not(.st) th:nth-child(1){width:21%} .ft:not(.edge):not(.st) th:nth-child(2){width:27%}
+.ft.edge th:nth-child(1){width:15%} .ft.edge th:nth-child(2){width:15%} .ft.edge th:nth-child(3){width:20%} .ft.edge th:nth-child(4){width:22%}
+@media (max-width:760px){
+  .ct th{width:auto;display:block;padding:8px 0 0}.ct td{display:block;padding:2px 0 8px;border-top:0}.ct tr{display:block;border-top:1px solid var(--line)}.ct tr:first-child{border-top:0}
+  .ft,.ft tbody,.ft tr,.ft td{display:block;width:100%}.ft thead{display:none}
+  .ft tr{border-bottom:1px solid var(--line);padding:6px 0}.ft td{border:0;padding:4px 12px}
+  .ft td:not(.fn)::before{content:attr(data-l);display:block;font:600 11px var(--font-body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+}
 /* diagrams */
 .dia{margin:12px 0 0;padding:12px 14px;border:1px dashed var(--line);border-radius:11px;background:var(--paper);overflow-x:auto}
 .dia figcaption,.dia .cap{font-size:12.5px;color:var(--muted);margin-top:6px}
@@ -224,6 +287,9 @@ td a.jump{font-weight:500;text-decoration:none;border-bottom:1px dashed var(--ac
 }
 @media (max-width:520px){ .card{padding:14px} .ch h3{flex-basis:100%} .btn .t{display:none} }
 @media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+/* show == >= != as typed (the font shorthand above resets this) */
+pre,pre *,code,.cell,.eq,.mono{font-variant-ligatures:none!important;font-feature-settings:"liga" 0,"calt" 0!important}
+@media (max-width:760px){ .ft.st td.num::before{content:none} .ft.st td.num{padding-bottom:0} }
 </style>
 
 </head>
@@ -265,6 +331,7 @@ table.dp td.dim{color:var(--muted)}
       <div class="results" id="results" hidden role="listbox" aria-label="Search results"></div>
     </div>
     <div class="tools">
+      <div class="vsw" id="viewSw" role="group" aria-label="View"><button type="button" data-v="short" title="Simple words + key code in tables">Short</button><button type="button" data-v="long" title="Full cards with diagrams and full code">Long</button></div>
       <button class="btn" id="codeAll" type="button" aria-pressed="false" title="Open or close every Java block"><span aria-hidden="true">{ }</span><span class="t">Show all code</span></button>
       <button class="btn" id="theme" type="button" title="Switch light or dark theme"><span aria-hidden="true">◐</span><span class="t" id="themeLbl">Theme</span></button>
     </div>
@@ -473,20 +540,309 @@ ${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td></tr>`).join('')}
 </script>
 
 <script>
-T.push({ id:'toolkit', name:'Java Toolkit', g:'O( )', fam:'Start', o:2, step:'Reference', alias:'java syntax scanner input output builtin built-in functions collections complexity integer max min arraylist hashmap stack queue string array declaration initialization',
-core:'All the Java you type in a DSA solution: reading input with Scanner, constants like <code>Integer.MAX_VALUE</code>, arrays, strings and every collection’s method names, plus what each operation costs.',
+(function(){
+const C = s => `<code>${esc(s)}</code>`;
+T.push({ id:'toolkit', name:'Java Toolkit', g:'O( )', fam:'Start', o:2, step:'Reference', alias:'java syntax scanner input output builtin built-in functions collections complexity integer max min arraylist hashmap stack queue deque priority string stringbuilder array 2d declaration initialization fill',
+core:'Every built-in you type in DSA, in one place. Each row: the function, what it does in plain words, and a 1–2 line example with the result in a comment.',
 recall:[
- '<code>Integer.MAX_VALUE</code> = 2,147,483,647 (≈ 2.1 × 10⁹), <code>Integer.MIN_VALUE</code> = −2,147,483,648, <code>Long.MAX_VALUE</code> ≈ 9.2 × 10¹⁸.',
- 'Input: <code>Scanner sc = new Scanner(System.in)</code>. After <code>nextInt()</code>, call <code>sc.nextLine()</code> once before reading a full line.',
- 'Size: <code>arr.length</code> (array, no brackets) · <code>s.length()</code> (String) · <code>list.size()</code> (collections).',
+ '<code>Integer.MAX_VALUE</code> = 2³¹ − 1 = 2147483647. <code>Integer.MIN_VALUE</code> = −2³¹ = −2147483648.',
+ 'Size: <code>arr.length</code> (array) · <code>s.length()</code> (String) · <code>list.size()</code> (collections).',
  'Stack: <code>push / pop / peek</code>. Queue: <code>offer / poll / peek</code>. Both: <code>isEmpty()</code>, <code>size()</code>.',
- '<code>Arrays.fill</code> works on one row only. Whole 2D array: <code>for (int[] row : dp) Arrays.fill(row, -1);</code>'
+ 'Fill a 2D array: <code>for (int[] row : dp) Arrays.fill(row, -1);</code>'
+],
+tables:[
+ { id:'tbl-input', h:'Input with Scanner', d:'Examples use <code>Scanner sc = new Scanner(System.in);</code> and <code>int n</code>. Full programs are further down.', run:false,
+   setup:'Scanner sc = new Scanner(System.in); int n = 3;',
+   rows:[
+  [C('new Scanner(System.in)'), 'Create once at the start of main.', `Scanner in = new Scanner(System.in);`],
+  [C('nextInt() / nextLong()'), 'Read the next number (skips spaces and new lines).', `int x = sc.nextInt();
+long big = sc.nextLong();`],
+  [C('nextDouble()'), 'Read a decimal number.', `double d = sc.nextDouble();`],
+  [C('next()'), 'Read one word (stops at a space).', `String w = sc.next();   // "hello" from "hello world"`],
+  [C('next().charAt(0)'), 'Read one character.', `char c = sc.next().charAt(0);`],
+  [C('nextLine()'), 'Read the whole line. After nextInt(), call it once to skip the leftover new line.', `sc.nextLine();                 // skip rest of the number line
+String line = sc.nextLine();   // "hello world"`],
+  [C('read an array'), 'n numbers into an array.', `int[] a = new int[n];
+for (int i = 0; i < n; i++) a[i] = sc.nextInt();`],
+  [C('read a char grid row'), 'A row like #..# is one word.', `char[] row = sc.next().toCharArray();`],
+  [C('test cases'), 'First number T, then T cases.', `int t = sc.nextInt();
+while (t-- > 0) { int k = sc.nextInt(); }`],
+  [C('hasNextInt()'), 'Read until the input ends.', `while (sc.hasNextInt()) { int x = sc.nextInt(); }`]
+ ]},
+ { id:'tbl-output', h:'Output', setup:'int[] a = {3, 1, 2};', rows:[
+  [C('println / print'), 'Print with / without a new line.', `System.out.println("sum = " + 6);   // sum = 6
+System.out.print("same line ");`],
+  [C('printf'), 'Formatted print. %d int, %s text, %.2f two decimals, %n new line.', `System.out.printf("%d %s %.2f%n", 7, "hi", 3.14159);   // 7 hi 3.14`],
+  [C('String.format'), 'Same format, but returns a String.', `String s = String.format("%05d", 42);   // "00042"`],
+  [C('Arrays.toString'), 'Print an array. println(a) alone prints junk like [I@1b6d.', `System.out.println(Arrays.toString(a));   // [3, 1, 2]`],
+  [C('StringBuilder out'), 'Fast output: build everything, print once.', `StringBuilder out = new StringBuilder();
+for (int x : a) out.append(x).append(' '); System.out.println(out);`]
+ ]},
+ { id:'tbl-numbers', h:'Numbers and constants', rows:[
+  [C('Integer.MAX_VALUE'), 'Largest int: 2³¹ − 1. Start value when you look for a minimum.', `int lo = Integer.MAX_VALUE;   // 2147483647
+lo = Math.min(lo, 5);         // 5`],
+  [C('Integer.MIN_VALUE'), 'Smallest int: −2³¹. Start value when you look for a maximum.', `int hi = Integer.MIN_VALUE;   // -2147483648
+hi = Math.max(hi, -7);        // -7`],
+  [C('Long.MAX_VALUE / MIN_VALUE'), 'long limits: about ±9.2 × 10¹⁸.', `long big = Long.MAX_VALUE;    // 9223372036854775807
+long small = Long.MIN_VALUE;`],
+  [C('(long) a * b'), 'Multiply big ints safely: cast first, or the result overflows.', `int a = 100000, b = 100000;
+long p = (long) a * b;        // 10000000000`],
+  [C('(int) 1e9'), 'A safe "infinity": INF + INF still fits in an int.', `int INF = (int) 1e9;          // 1000000000
+int two = INF + INF;          // 2000000000`],
+  [C('1_000_000_007'), 'The usual MOD. Take % after every add or multiply.', `final int MOD = 1_000_000_007;
+long x = (123456789L * 987654321L) % MOD;`],
+  [C('/  and  %'), 'int division drops the decimal part. % gives the remainder.', `int q = 7 / 2, r = 7 % 2;     // 3, 1
+double d = 7 / 2.0;           // 3.5`],
+  [C('Math.floorMod'), 'Remainder that is never negative.', `int m1 = -7 % 3;              // -1
+int m2 = Math.floorMod(-7, 3);  // 2`]
+ ]},
+ { id:'tbl-math', h:'Math', rows:[
+  [C('Math.max / Math.min'), 'Bigger / smaller of two values.', `int mx = Math.max(3, 9);   // 9
+int mn = Math.min(3, 9);   // 3`],
+  [C('Math.abs'), 'Remove the minus sign.', `int x = Math.abs(-5);      // 5`],
+  [C('Math.pow'), 'Power. Returns a double, so cast if you need a number type.', `double p = Math.pow(2, 10);         // 1024.0
+long q = (long) Math.pow(2, 40);    // 1099511627776`],
+  [C('Math.sqrt'), 'Square root (double).', `double r = Math.sqrt(49);      // 7.0
+int f = (int) Math.sqrt(50);   // 7`],
+  [C('Math.ceil / floor / round'), 'Round up / down / to nearest.', `double c = Math.ceil(3.2);     // 4.0
+long r = Math.round(2.5);      // 3`],
+  [C('ceiling division'), 'a / b rounded up, for positive ints.', `int a = 7, b = 2;
+int c = (a + b - 1) / b;       // 4`],
+  [C('Math.log10'), 'Number of digits of a positive number.', `int digits = (int) Math.log10(12345) + 1;   // 5`]
+ ]},
+ { id:'tbl-convert', h:'Conversions and Character', rows:[
+  [C('Integer.parseInt'), 'Text → number.', `int n = Integer.parseInt("123");          // 123
+long L = Long.parseLong("9000000000");`],
+  [C('String.valueOf'), 'Number → text.', `String s = String.valueOf(45);   // "45"
+String t = 45 + "";              // "45"`],
+  [C("c - '0'"), 'Digit character → its number.', `char c = '7';
+int d = c - '0';                 // 7`],
+  [C("(char) ('0' + d)"), 'Number → digit character, or next letter.', `char c = (char) ('0' + 3);  // '3'
+char n = (char) ('a' + 1);  // 'b'`],
+  [C("c - 'a'"), 'Letter → index 0..25 (for int[26] counts).', `char c = 'd';
+int idx = c - 'a';          // 3`],
+  [C('Character.isDigit / isLetter'), 'Check what a character is.', `boolean d = Character.isDigit('5');    // true
+boolean l = Character.isLetter('x');   // true`],
+  [C('isLetterOrDigit / isUpperCase'), 'More checks.', `boolean a = Character.isLetterOrDigit('_');   // false
+boolean u = Character.isUpperCase('Q');       // true`],
+  [C('Character.toUpperCase / toLowerCase'), 'Change the case of one char.', `char u = Character.toUpperCase('a');   // 'A'
+char l = Character.toLowerCase('Q');   // 'q'`],
+  [C('Integer.toBinaryString'), 'Number → binary text, and back.', `String b = Integer.toBinaryString(10);   // "1010"
+int n = Integer.parseInt("1010", 2);     // 10`],
+  [C('Integer.bitCount'), 'How many 1 bits.', `int ones = Integer.bitCount(10);   // 2`],
+  [C('Integer .equals()'), 'Compare Integer objects with equals. == can be false above 127.', `Integer a = 1000, b = 1000;
+boolean ok = a.equals(b);          // true`]
+ ]},
+ { id:'tbl-array1d', h:'Arrays (1D)', d:'Examples start from <code>int[] a = {4, 2, 7, 1};</code>', setup:'int[] a = {4, 2, 7, 1};', rows:[
+  [C('new int[n]'), 'New array of size n, all 0.', `int[] z = new int[5];   // [0, 0, 0, 0, 0]`],
+  [C('{ values }'), 'Array with values.', `int[] b = {4, 2, 7, 1};
+int[] c = new int[]{1, 2, 3};`],
+  [C('a.length'), 'Size of the array (no brackets).', `int n = a.length;   // 4`],
+  [C('Arrays.fill'), 'Set every cell to one value, e.g. −1.', `Arrays.fill(a, -1);   // [-1, -1, -1, -1]`],
+  [C('Arrays.sort'), 'Sort ascending (all, or a range).', `Arrays.sort(a);         // [1, 2, 4, 7]
+Arrays.sort(a, 0, 2);   // only index 0..1`],
+  [C('sort descending'), 'Needs Integer[], not int[].', `Integer[] b = {4, 2, 7};
+Arrays.sort(b, Collections.reverseOrder());   // [7, 4, 2]`],
+  [C('Arrays.toString'), 'Turn into readable text for printing.', `String s = Arrays.toString(a);   // "[4, 2, 7, 1]"`],
+  [C('clone / copyOfRange'), 'Copy all, or a part (end not included).', `int[] b = a.clone();
+int[] p = Arrays.copyOfRange(a, 1, 3);   // [2, 7]`],
+  [C('Arrays.equals'), 'Same values? (== only checks same object).', `int[] b = {4, 2, 7, 1};
+boolean same = Arrays.equals(a, b);   // true`],
+  [C('Arrays.binarySearch'), 'Find a value in a SORTED array.', `Arrays.sort(a);                      // [1, 2, 4, 7]
+int i = Arrays.binarySearch(a, 4);   // 2`],
+  [C('sum / max'), 'Quick sum and max with streams.', `int sum = Arrays.stream(a).sum();             // 14
+int mx = Arrays.stream(a).max().getAsInt();   // 7`],
+  [C('other types'), 'boolean starts false, objects start null.', `boolean[] seen = new boolean[10];   // all false
+String[] s = new String[3];         // all null`],
+  [C('loop'), 'for-each to read, index loop to change.', `for (int x : a) System.out.print(x + " ");
+for (int i = 0; i < a.length; i++) a[i] *= 2;`]
+ ]},
+ { id:'tbl-array2d', h:'Arrays (2D and 3D)', d:'Examples start from <code>int[][] m = {{1, 2, 3}, {4, 5, 6}};</code>', setup:'int[][] m = {{1, 2, 3}, {4, 5, 6}};', rows:[
+  [C('new int[r][c]'), 'r rows, c columns, all 0.', `int[][] g = new int[3][4];`],
+  [C('m.length / m[0].length'), 'Number of rows / columns.', `int rows = m.length;      // 2
+int cols = m[0].length;   // 3`],
+  [C('fill whole 2D with −1'), 'Arrays.fill works on one row, so loop the rows.', `int[][] dp = new int[3][4];
+for (int[] row : dp) Arrays.fill(row, -1);`],
+  [C('fill 3D with −1'), 'Same idea, one more loop.', `int[][][] dp = new int[2][3][4];
+for (int[][] l : dp) for (int[] r : l) Arrays.fill(r, -1);`],
+  [C('Arrays.deepToString'), 'Print a 2D array.', `String s = Arrays.deepToString(m);   // "[[1, 2, 3], [4, 5, 6]]"`],
+  [C('nested loop'), 'Visit every cell.', `for (int i = 0; i < m.length; i++)
+    for (int j = 0; j < m[0].length; j++) m[i][j] += 1;`],
+  [C('copy 2D'), 'clone() copies only one level, so copy each row.', `int[][] c = new int[m.length][];
+for (int i = 0; i < m.length; i++) c[i] = m[i].clone();`],
+  [C('sort rows by column'), 'Sort intervals by start.', `int[][] iv = {{5, 6}, {1, 3}};
+Arrays.sort(iv, (x, y) -> Integer.compare(x[0], y[0]));   // [[1, 3], [5, 6]]`],
+  [C('boolean[][] / char[][]'), 'Visited grid, board.', `boolean[][] vis = new boolean[3][3];   // all false
+char[][] b = new char[2][2]; for (char[] r : b) Arrays.fill(r, '.');`],
+  [C('directions'), 'Up, right, down, left neighbours in a grid.', `int[] dr = {-1, 0, 1, 0}, dc = {0, 1, 0, -1};
+int nr = 1 + dr[0], nc = 1 + dc[0];   // cell above (1,1)`]
+ ]},
+ { id:'tbl-string', h:'String', d:'Examples start from <code>String s = "hello";</code>. A String never changes; methods return a new one.', setup:'String s = "hello";', rows:[
+  [C('create'), 'From text or from chars.', `String a = "hi";
+String b = new String(new char[]{'h', 'i'});   // "hi"`],
+  [C('length()'), 'Number of characters (with brackets).', `int n = s.length();   // 5`],
+  [C('charAt(i)'), 'Character at index i.', `char c = s.charAt(1);   // 'e'`],
+  [C('substring(a, b)'), 'Part from a up to b (b not included).', `String x = s.substring(1, 4);   // "ell"
+String y = s.substring(2);      // "llo"`],
+  [C('indexOf / lastIndexOf'), 'Where is it? −1 if missing.', `int i = s.indexOf('l');       // 2
+int j = s.lastIndexOf('l');   // 3`],
+  [C('contains / startsWith / endsWith'), 'Is this text inside / at the start / at the end?', `boolean c = s.contains("ell");     // true
+boolean st = s.startsWith("he");   // true`],
+  [C('equals / equalsIgnoreCase'), 'Compare text. Never use ==.', `boolean e = s.equals("hello");            // true
+boolean f = s.equalsIgnoreCase("HELLO");  // true`],
+  [C('compareTo'), 'Dictionary order: negative, 0 or positive.', `int x = "apple".compareTo("banana");   // negative (apple first)`],
+  [C('toUpperCase / toLowerCase'), 'Change case.', `String u = s.toUpperCase();   // "HELLO"`],
+  [C('trim'), 'Remove spaces at both ends.', `String t = "  hi  ".trim();   // "hi"`],
+  [C('replace'), 'Replace every match.', `String r = s.replace('l', 'L');   // "heLLo"`],
+  [C('split'), 'Break into parts. " +" splits on one or more spaces.', `String[] p = "a,b,c".split(",");             // [a, b, c]
+String[] w = "the  sky".trim().split(" +");   // [the, sky]`],
+  [C('String.join'), 'Glue parts with a separator.', `String j = String.join("-", "a", "b", "c");   // "a-b-c"`],
+  [C('toCharArray'), 'To a char array (to sort or change it), then back.', `char[] cs = s.toCharArray(); Arrays.sort(cs);
+String sorted = new String(cs);   // "ehllo"`],
+  [C('repeat / isEmpty'), 'Repeat text; check for "".', `String r = "ab".repeat(3);       // "ababab"
+boolean e = "".isEmpty();        // true`],
+  [C('loop over chars'), 'Two common ways.', `for (char ch : s.toCharArray()) System.out.print(ch);
+for (int i = 0; i < s.length(); i++) System.out.print(s.charAt(i));`]
+ ]},
+ { id:'tbl-sb', h:'StringBuilder', d:'Examples start from <code>StringBuilder sb = new StringBuilder("abc");</code>. Use it to build text in a loop: <code>s += x</code> copies the whole string every time.', setup:'StringBuilder sb = new StringBuilder("abc");', rows:[
+  [C('new StringBuilder()'), 'Empty, or starting with text.', `StringBuilder a = new StringBuilder();
+StringBuilder b = new StringBuilder("abc");`],
+  [C('append'), 'Add at the end (any type).', `sb.append("de").append(1);   // "abcde1"`],
+  [C('insert(i, s)'), 'Add at index i.', `sb.insert(0, "X");   // "Xabc"`],
+  [C('delete(a, b)'), 'Remove from a up to b (b not included).', `sb.delete(0, 2);   // "c"`],
+  [C('deleteCharAt(i)'), 'Remove one character.', `sb.deleteCharAt(sb.length() - 1);   // "ab"`],
+  [C('reverse()'), 'Reverse in place.', `sb.reverse();   // "cba"`],
+  [C('length() / charAt(i)'), 'Size and one character.', `int n = sb.length();    // 3
+char c = sb.charAt(0);  // 'a'`],
+  [C('setCharAt(i, c)'), 'Change one character.', `sb.setCharAt(0, 'z');   // "zbc"`],
+  [C('substring(a, b)'), 'Copy out a part as a String.', `String t = sb.substring(1, 3);   // "bc"`],
+  [C('indexOf(str)'), 'Where is it? −1 if missing.', `int i = sb.indexOf("c");   // 2`],
+  [C('toString()'), 'Get the final String.', `String s = sb.toString();   // "abc"`],
+  [C('setLength(0)'), 'Clear it.', `sb.setLength(0);   // ""`],
+  [C('reverse a String'), 'One-liner.', `String r = new StringBuilder("level").reverse().toString();   // "level"`]
+ ]},
+ { id:'tbl-list', h:'ArrayList', d:'Examples start from <code>List&lt;Integer&gt; list = new ArrayList&lt;&gt;(List.of(5, 3, 8));</code>', setup:'List<Integer> list = new ArrayList<>(List.of(5, 3, 8));', rows:[
+  [C('new ArrayList<>()'), 'A list that grows. List of lists for graphs.', `List<Integer> a = new ArrayList<>();
+List<List<Integer>> g = new ArrayList<>();`],
+  [C('add(o) | add(i, o)'), 'Add at the end, or at index i.', `list.add(9);      // [5, 3, 8, 9]
+list.add(0, 1);   // [1, 5, 3, 8, 9]`],
+  [C('get(i) / set(i, o)'), 'Read / change the value at index i.', `int x = list.get(0);   // 5
+list.set(1, 4);        // [5, 4, 8]`],
+  [C('remove(i) | remove(Object)'), 'Remove by index, or by value (wrap the value).', `list.remove(0);                    // [3, 8]
+list.remove(Integer.valueOf(8));   // [3]`],
+  [C('size() / isEmpty()'), 'How many / is it empty?', `int n = list.size();          // 3
+boolean e = list.isEmpty();   // false`],
+  [C('contains / indexOf'), 'Is it there / at which index?', `boolean has = list.contains(3);   // true
+int i = list.indexOf(8);          // 2`],
+  [C('clear()'), 'Remove everything.', `list.clear();   // []`],
+  [C('sort'), 'Ascending or descending.', `Collections.sort(list);                  // [3, 5, 8]
+list.sort(Collections.reverseOrder());   // [8, 5, 3]`],
+  [C('Collections.reverse / max / min'), 'Reverse in place; biggest / smallest.', `Collections.reverse(list);           // [8, 3, 5]
+int mx = Collections.max(list);      // 8`],
+  [C('toArray'), 'List → array.', `Integer[] arr = list.toArray(new Integer[0]);   // [5, 3, 8]
+int[] prim = list.stream().mapToInt(i -> i).toArray();`],
+  [C('Arrays.asList / List.of'), 'Quick fixed lists; wrap in new ArrayList to edit.', `List<Integer> fixed = Arrays.asList(1, 2, 3);
+List<Integer> copy = new ArrayList<>(fixed);`],
+  [C('loop'), 'Read every element.', `for (int x : list) System.out.print(x + " ");   // 5 3 8`]
+ ]},
+ { id:'tbl-stack', h:'Stack', d:'Examples start from <code>Stack&lt;Integer&gt; st</code> with 10, 20, 30 pushed (30 on top).', setup:'Stack<Integer> st = new Stack<>(); st.push(10); st.push(20); st.push(30);', rows:[
+  [C('new Stack<>()'), 'Create. ArrayDeque has the same push/pop/peek and is faster.', `Stack<Integer> s1 = new Stack<>();
+Deque<Integer> s2 = new ArrayDeque<>();`],
+  [C('push(x)'), 'Put on top.', `st.push(40);   // top is now 40`],
+  [C('pop()'), 'Take the top off and return it.', `int x = st.pop();   // 30`],
+  [C('peek()'), 'Look at the top, keep it.', `int x = st.peek();   // 30`],
+  [C('isEmpty() / size()'), 'Empty? How many?', `boolean e = st.isEmpty();   // false
+int n = st.size();          // 3`],
+  [C('add(obj) | add(i, val)'), 'Stack is also a list: add on top, or at an index (0 = bottom).', `st.add(40);     // [10, 20, 30, 40]
+st.add(0, 5);   // [5, 10, 20, 30, 40]`],
+  [C('get(index)'), 'Read any position (0 = bottom).', `int bottom = st.get(0);                // 10
+int top = st.get(st.size() - 1);       // 30`],
+  [C('remove(index) | remove(obj)'), 'Remove by index, or by value.', `st.remove(0);                     // [20, 30]
+st.remove(Integer.valueOf(30));   // [20]`],
+  [C('contains / search'), 'Is it there? Position counted from the top (1 = top).', `boolean h = st.contains(20);   // true
+int pos = st.search(30);       // 1`],
+  [C('clear()'), 'Remove everything.', `st.clear();   // []`],
+  [C('empty the stack'), 'Always check isEmpty before pop / peek.', `while (!st.isEmpty()) System.out.print(st.pop() + " ");   // 30 20 10`]
+ ]},
+ { id:'tbl-queue', h:'Queue', d:'Examples start from <code>Queue&lt;Integer&gt; q</code> holding 1, 2, 3 (1 at the front). The left method of each pair throws an error on failure; the right one returns false / null.', setup:'Queue<Integer> q = new LinkedList<>(List.of(1, 2, 3));', rows:[
+  [C('new LinkedList<>() / ArrayDeque'), 'Queue is an interface, so pick a class.', `Queue<Integer> a = new LinkedList<>();
+Queue<Integer> b = new ArrayDeque<>();`],
+  [C('add(e) | offer(e)'), 'Add at the back.', `q.offer(4);   // [1, 2, 3, 4]
+q.add(5);     // [1, 2, 3, 4, 5]`],
+  [C('remove() | poll()'), 'Take from the front.', `int x = q.poll();     // 1 (null if empty)
+int y = q.remove();   // 2 (error if empty)`],
+  [C('element() | peek()'), 'Look at the front.', `int x = q.peek();      // 1 (null if empty)
+int y = q.element();   // 1 (error if empty)`],
+  [C('size / isEmpty / contains / clear'), 'Same as other collections.', `boolean h = q.contains(2);   // true
+q.clear();                   // []`],
+  [C('new PriorityQueue<>()'), 'A queue that always gives the smallest first.', `Queue<Integer> pq = new PriorityQueue<>(List.of(5, 1, 3));
+int s = pq.poll();   // 1`],
+  [C('Queue<int[]>'), 'Queue of pairs, e.g. grid cells for BFS.', `Queue<int[]> cells = new ArrayDeque<>();
+cells.offer(new int[]{0, 0});`],
+  [C('level loop'), 'Process exactly one BFS level.', `for (int sz = q.size(); sz > 0; sz--) {
+    int cur = q.poll(); }`]
+ ]},
+ { id:'tbl-deque', h:'Deque (both ends)', d:'Examples start from <code>Deque&lt;Integer&gt; dq = new ArrayDeque&lt;&gt;(List.of(1, 2, 3));</code>', setup:'Deque<Integer> dq = new ArrayDeque<>(List.of(1, 2, 3));', rows:[
+  [C('offerFirst / offerLast'), 'Add at the front / back.', `dq.offerFirst(0);   // [0, 1, 2, 3]
+dq.offerLast(4);    // [0, 1, 2, 3, 4]`],
+  [C('pollFirst / pollLast'), 'Remove from the front / back.', `int f = dq.pollFirst();   // 1
+int l = dq.pollLast();    // 3`],
+  [C('peekFirst / peekLast'), 'Look at the front / back.', `int f = dq.peekFirst();   // 1
+int l = dq.peekLast();    // 3`],
+  [C('push / pop / peek'), 'Use it as a stack (front = top).', `dq.push(9);          // [9, 1, 2, 3]
+int t = dq.pop();    // 9`]
+ ]},
+ { id:'tbl-pq', h:'PriorityQueue (heap)', d:'Examples start from <code>PriorityQueue&lt;Integer&gt; pq</code> holding 5, 1, 3.', setup:'PriorityQueue<Integer> pq = new PriorityQueue<>(List.of(5, 1, 3));', rows:[
+  [C('new PriorityQueue<>()'), 'Min-heap: smallest comes out first.', `PriorityQueue<Integer> min = new PriorityQueue<>();`],
+  [C('Collections.reverseOrder()'), 'Max-heap: largest comes out first.', `PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());`],
+  [C('custom order'), 'Pairs ordered by their first value.', `PriorityQueue<int[]> p = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));
+p.offer(new int[]{4, 0});`],
+  [C('offer / poll / peek'), 'Add; take the smallest; look at it.', `pq.offer(0);
+int s = pq.poll();   // 0`],
+  [C('size / isEmpty'), 'How many / empty?', `int n = pq.size();   // 3`]
+ ]},
+ { id:'tbl-map', h:'HashMap', d:'Examples start from a map with <code>apple=3</code> and <code>kiwi=1</code>.', setup:'Map<String, Integer> map = new HashMap<>(); map.put("apple", 3); map.put("kiwi", 1);', rows:[
+  [C('new HashMap<>()'), 'Key → value store.', `Map<String, Integer> m = new HashMap<>();
+Map<Integer, List<Integer>> g = new HashMap<>();`],
+  [C('put(key, val)'), 'Add, or overwrite if the key exists.', `map.put("fig", 7);     // added
+map.put("kiwi", 5);    // kiwi is now 5`],
+  [C('get(key)'), 'Value for a key. null if missing (int x = null crashes).', `int a = map.get("apple");   // 3`],
+  [C('getOrDefault(key, d)'), 'Value, or d when the key is missing.', `int x = map.getOrDefault("mango", 0);   // 0`],
+  [C('containsKey / containsValue'), 'Is this key / value there?', `boolean k = map.containsKey("kiwi");   // true
+boolean v = map.containsValue(3);      // true`],
+  [C('count with a map'), 'Add 1 to a counter.', `map.put("kiwi", map.getOrDefault("kiwi", 0) + 1);   // 2
+map.merge("kiwi", 1, Integer::sum);                 // 3`],
+  [C('putIfAbsent(key, val)'), 'Add only if the key is new.', `map.putIfAbsent("kiwi", 100);   // stays 1
+map.putIfAbsent("fig", 7);      // added`],
+  [C('remove(key)'), 'Delete a key.', `map.remove("apple");   // {kiwi=1}`],
+  [C('size / isEmpty / clear'), 'How many keys; empty?; delete all.', `int n = map.size();   // 2
+map.clear();          // {}`],
+  [C('keySet() loop'), 'Go over every key.', `for (String key : map.keySet())
+    System.out.println("key: " + key + " value: " + map.get(key));`],
+  [C('entrySet() loop'), 'Keys and values together.', `for (Map.Entry<String, Integer> e : map.entrySet())
+    System.out.println(e.getKey() + " = " + e.getValue());`],
+  [C('values()'), 'Only the values.', `for (int v : map.values()) System.out.print(v + " ");`],
+  [C('computeIfAbsent'), 'Map of lists: create the list the first time.', `Map<Integer, List<Integer>> g = new HashMap<>();
+g.computeIfAbsent(1, k -> new ArrayList<>()).add(10);`]
+ ]},
+ { id:'tbl-set', h:'HashSet, TreeSet, TreeMap', d:'Examples start from <code>set = {3, 1}</code>, <code>ts = {10, 20, 30}</code> and <code>tm = {1=one, 5=five}</code>.', setup:'Set<Integer> set = new HashSet<>(List.of(3, 1)); TreeSet<Integer> ts = new TreeSet<>(List.of(10, 20, 30)); TreeMap<Integer, String> tm = new TreeMap<>(Map.of(1, "one", 5, "five"));', rows:[
+  [C('set.add(x)'), 'Add; returns false if it was already there.', `boolean a = set.add(3);   // false
+boolean b = set.add(5);   // true`],
+  [C('contains / remove / size'), 'Is it there? delete; how many.', `boolean h = set.contains(1);   // true
+set.remove(1);                // [3]`],
+  [C('ts.first() / last()'), 'Smallest / largest in a TreeSet (always sorted).', `int lo = ts.first();   // 10
+int hi = ts.last();    // 30`],
+  [C('floor / ceiling'), 'Nearest ≤ x / ≥ x (null if none). higher / lower are strict.', `Integer f = ts.floor(25);     // 20
+Integer c = ts.ceiling(25);   // 30`],
+  [C('tm.firstKey() / floorKey(x)'), 'TreeMap: keys kept sorted.', `int k = tm.firstKey();        // 1
+Integer f = tm.floorKey(4);   // 1`],
+  [C('LinkedHashSet / LinkedHashMap'), 'Keeps insertion order.', `Set<Integer> s = new LinkedHashSet<>(List.of(3, 1, 2));   // [3, 1, 2]`]
+ ]}
 ],
 secs:[
- { h:'Input and output', d:'Most judges (GFG, Codeforces, CodeChef, HackerRank) read from <code>System.in</code>. LeetCode and GFG “function” problems pass the arguments directly, so you only need this when you write <code>main</code>.', ps:[
-  { id:'scanner', t:'Scanner: numbers, arrays, words and lines', k:'read n, then n numbers, then a sentence',
-    d:'<code>nextInt()</code>, <code>nextLong()</code>, <code>nextDouble()</code> and <code>next()</code> (one word) skip spaces and newlines. <code>nextLine()</code> reads the rest of the current line, so after reading numbers call it once to drop the leftover newline.',
-    v:D('Input on the left; what each call consumes on the right.', GRID([['input','read with'],['5','sc.nextInt()'],['3 1 4 1 5','loop of sc.nextInt()'],['hello world','sc.nextLine() after one extra sc.nextLine()']],{side:false})),
+ { h:'Full programs', d:'Complete reading examples. Each one was run with the input shown in its comment.', ps:[
+  { id:'scanner', t:'Scanner: numbers, an array and a line', k:'read n, then n numbers, then a sentence',
+    d:'Read numbers with <code>nextInt()</code>. Before <code>nextLine()</code>, call <code>sc.nextLine()</code> once to skip the leftover new line.',
     c:`
 void readWithScanner() {
     // input:
@@ -500,12 +856,9 @@ void readWithScanner() {
     sc.nextLine();                         // drop the newline left after the numbers
     String line = sc.nextLine();           // "hello world" (whole line)
     System.out.println(n + " " + Arrays.toString(a) + " " + line);
-}
-// other reads: sc.nextLong(), sc.nextDouble(), sc.next() (one word),
-// sc.next().charAt(0) (one char), sc.nextBoolean(), sc.hasNextInt()`, tc:'O(input)', sc:'O(n)',
-    w:'Skipping the extra <code>sc.nextLine()</code> makes the next <code>nextLine()</code> return an empty string.' },
-  { t:'Read a matrix and a character grid', k:'R C, then R rows of numbers; a grid of . and # characters',
-    d:'Numbers: two nested loops of <code>nextInt()</code>. A row of characters with no spaces is one word: <code>sc.next().toCharArray()</code>.',
+}`, tc:'O(input)', sc:'O(n)', w:'Skip the extra <code>sc.nextLine()</code> and the next <code>nextLine()</code> returns an empty string.' },
+  { t:'Read a matrix and a character grid', k:'R C, then R rows of numbers; a grid of . and #',
+    d:'Numbers: two loops of <code>nextInt()</code>. A row of characters with no spaces is one word: <code>sc.next().toCharArray()</code>.',
     c:`
 void readMatrix() {
     // input:
@@ -523,8 +876,8 @@ void readMatrix() {
     for (int i = 0; i < r; i++) grid[i] = sc.next().toCharArray();   // one row per word
     System.out.println(Arrays.deepToString(m) + " " + new String(grid[1]));
 }`, tc:'O(R · C)', sc:'O(R · C)' },
-  { t:'Test cases, and reading until input ends', k:'first line T, then T test cases; unknown number of lines',
-    d:'Loop <code>while (t-- &gt; 0)</code> for T cases. When there is no count, loop on <code>sc.hasNextInt()</code> (or <code>hasNext()</code>, <code>hasNextLine()</code>).',
+  { t:'Test cases, and reading until input ends', k:'first line T, then T test cases; unknown number of values',
+    d:'Use <code>while (t-- &gt; 0)</code> for T cases. With no count, loop on <code>sc.hasNextInt()</code>.',
     c:`
 void readTestCases() {
     // input:
@@ -550,8 +903,8 @@ void readUntilEnd() {
         System.out.println(x * 2);
     }
 }`, tc:'O(input)', sc:'O(1)' },
-  { id:'main-template', t:'Full program template', k:'what to submit on a judge that wants a complete program',
-    d:'The file usually must be named <code>Main.java</code> with <code>public class Main</code>. Collect output in a <code>StringBuilder</code> and print once at the end; it is much faster than many <code>println</code> calls.',
+  { id:'main-template', t:'Full program template', k:'what to submit when the judge wants a complete program',
+    d:'The file is usually <code>Main.java</code> with <code>public class Main</code>. Collect output in a <code>StringBuilder</code> and print once.',
     c:`
 // import java.util.*;            <- first line of the file
 // public class Main {
@@ -567,8 +920,8 @@ public static void main(String[] args) {
 }
 static long solve(int n) { return (long) n * (n + 1) / 2; }   // your logic here
 // }`, tc:'O(input)', sc:'O(output)' },
-  { t:'Fast input with BufferedReader', k:'10⁵+ numbers to read, Scanner is too slow (TLE)',
-    d:'Read whole lines with <code>br.readLine()</code> and split them with <code>StringTokenizer</code>. Roughly 5–10× faster than Scanner on big inputs.',
+  { t:'Fast input with BufferedReader', k:'10⁵ or more numbers and Scanner is too slow (TLE)',
+    d:'Read whole lines with <code>br.readLine()</code> and split them with <code>StringTokenizer</code>. About 5–10× faster than Scanner.',
     c:`
 void fastIO() throws java.io.IOException {
     // input:
@@ -583,406 +936,20 @@ void fastIO() throws java.io.IOException {
     StringBuilder out = new StringBuilder();          // print once at the end
     for (int x : a) out.append(x).append(' ');
     System.out.println(out);                          // 1 2 3
-}`, tc:'O(input)', sc:'O(input)' },
-  { t:'Printing output', k:'println vs print, formatted decimals, printing arrays and lists',
-    c:`
-void printDemo() {
-    int[] a = {3, 1, 2};
-    System.out.println("sum = " + 6);                     // sum = 6   (adds a newline)
-    System.out.print("no newline ");                      // stays on the same line
-    System.out.printf("%d %s %.2f%n", 7, "hi", 3.14159);  // 7 hi 3.14
-    String s = String.format("%05d", 42);                 // "00042"
-    System.out.println(Arrays.toString(a));               // [3, 1, 2]
-    System.out.println(Arrays.deepToString(new int[][]{{1, 2}, {3, 4}}));   // [[1, 2], [3, 4]]
-    System.out.println(List.of(1, 2, 3));                 // [1, 2, 3]
-    for (int x : a) System.out.print(x + " ");            // 3 1 2
-    System.out.println();
-}`, tc:'O(output)', sc:'O(1)', w:'Printing an array directly (<code>System.out.println(a)</code>) shows something like <code>[I@1b6d3586</code>. Use <code>Arrays.toString(a)</code>.' }
- ]},
- { h:'Numbers, constants and Math', ps:[
-  { id:'int-limits', t:'Integer.MAX_VALUE, MIN_VALUE, long and overflow', k:'“infinity” for min/max tracking, values beyond 2·10⁹, answers modulo 1e9+7',
-    d:'Start a minimum at <code>Integer.MAX_VALUE</code> and a maximum at <code>Integer.MIN_VALUE</code>. Anything that can pass about 2.1 × 10⁹ needs <code>long</code>. When you add two “infinities”, use <code>(int) 1e9</code> instead so the sum still fits.',
-    v:D('Ranges of the types you use most.', GRID([['type','min','max','about'],['int','-2³¹ = -2147483648','2³¹ - 1 = 2147483647','±2.1 × 10⁹'],['long','-2⁶³ = -9223372036854775808','2⁶³ - 1 = 9223372036854775807','±9.2 × 10¹⁸'],['char','0','65535','unsigned'],['double','±4.9e-324','±1.8e308','~15 digits']],{side:false})),
-    c:`
-void numbersDemo() {
-    int imax = Integer.MAX_VALUE;          //  2^31 - 1 =  2147483647
-    int imin = Integer.MIN_VALUE;          // -2^31     = -2147483648
-    long lmax = Long.MAX_VALUE;            //  9223372036854775807
-    long lmin = Long.MIN_VALUE;
-    double dmax = Double.MAX_VALUE;
-    int minSoFar = Integer.MAX_VALUE, maxSoFar = Integer.MIN_VALUE;   // typical starts
-    int wrapped = imax + 1;                // overflow: becomes -2147483648 silently
-    long safe = (long) imax + 1;           // 2147483648 (cast BEFORE adding)
-    long product = (long) 100000 * 100000; // 10000000000; without the cast it overflows
-    int INF = (int) 1e9;                   // 1000000000; INF + INF still fits in int
-    final int MOD = 1_000_000_007;         // underscores only for readability
-    long big = 5_000_000_000L;             // L suffix for long literals
-    int q = 7 / 2, r = 7 % 2;              // 3 and 1: int division drops the fraction
-    double d = 7 / 2.0;                    // 3.5
-    int m1 = -7 % 3;                       // -1  (sign follows the left side)
-    int m2 = Math.floorMod(-7, 3);         // 2   (always non-negative for positive mod)
-}`, tc:'O(1)', sc:'O(1)' },
-  { t:'Math functions', k:'max, min, abs, power, square root, ceiling division, log',
-    c:`
-void mathDemo() {
-    int mx = Math.max(3, 9), mn = Math.min(3, 9);       // 9, 3
-    int ab = Math.abs(-5);                              // 5
-    double p = Math.pow(2, 10);                         // 1024.0 (returns double)
-    long p2 = (long) Math.pow(2, 40);                   // 1099511627776
-    double sq = Math.sqrt(49);                          // 7.0
-    int isq = (int) Math.sqrt(50);                      // 7  (floor of the root)
-    double up = Math.ceil(7 / 2.0);                     // 4.0
-    double down = Math.floor(3.7);                      // 3.0
-    long rounded = Math.round(2.5);                     // 3
-    int a = 7, b = 2;
-    int ceilDiv = (a + b - 1) / b;                      // 4: ceil(a / b) for positive ints
-    double log2 = Math.log(8) / Math.log(2);            // 3.0 (log base 2)
-    int digits = (int) Math.log10(12345) + 1;           // 5
-    int dice = (int) (Math.random() * 6) + 1;           // random 1..6
-}`, tc:'O(1)', sc:'O(1)', w:'<code>Math.pow</code> returns a <code>double</code>; for exact big powers or powers under a modulus, use the fast power loop in <a href="#maths">Basic Maths</a>.' },
-  { t:'Conversions: String ↔ int, char ↔ int, binary', k:'parse a number from text, digit characters, int to char',
-    c:`
-void conversionDemo() {
-    int n = Integer.parseInt("123");                    // String → int
-    long big = Long.parseLong("9000000000");            // String → long
-    String s1 = String.valueOf(45);                     // int → String
-    String s2 = Integer.toString(45);
-    String s3 = 45 + "";
-    int digit = '7' - '0';                              // char digit → int: 7
-    char ch = (char) ('0' + 3);                         // int → char digit: '3'
-    char next = (char) ('a' + 1);                       // 'b'
-    int code = 'A';                                     // 65 (ASCII value)
-    char fromCode = (char) 97;                          // 'a'
-    String bin = Integer.toBinaryString(10);            // "1010"
-    int fromBin = Integer.parseInt("1010", 2);          // 10
-    int ones = Integer.bitCount(10);                    // 2
-    Integer boxed = 5;                                  // autoboxing int → Integer
-    int unboxed = boxed;                                // unboxing
-    boolean same = Integer.valueOf(1000).equals(1000);  // true; compare Integer objects with equals
-}`, tc:'O(length)', sc:'O(1)' },
-  { t:'Character methods', k:'is it a digit / letter / uppercase? convert case, letter index',
-    c:`
-void charDemo() {
-    char c = 'a';
-    boolean d = Character.isDigit('5');                 // true
-    boolean l = Character.isLetter('x');                // true
-    boolean ld = Character.isLetterOrDigit('_');        // false
-    boolean up = Character.isUpperCase('Q');            // true
-    boolean lo = Character.isLowerCase('q');            // true
-    boolean ws = Character.isWhitespace(' ');           // true
-    char lower = Character.toLowerCase('Q');            // 'q'
-    char upper = Character.toUpperCase(c);              // 'A'
-    int idx = c - 'a';                                  // 0  → index into int[26]
-    int val = Character.getNumericValue('8');           // 8
-}`, tc:'O(1)', sc:'O(1)' }
- ]},
- { h:'Arrays: 1D, 2D, 3D', ps:[
-  { id:'array-1d', t:'1D arrays: declare, fill, sort, copy', k:'create an array, set every value to −1, sort, copy part of it',
-    d:'New arrays start at 0 (numbers), <code>false</code> (boolean) or <code>null</code> (objects). Sizes are fixed; use an <code>ArrayList</code> when the size changes.',
-    v:D('new int[5] starts as zeros; Arrays.fill(a, −1) sets every cell.', A('0 0 0 0 0',{lab:'new'}), A('-1 -1 -1 -1 -1',{lab:'fill', ok:['0-4']})),
-    c:`
-void array1DDemo() {
-    int[] a = new int[5];                  // [0, 0, 0, 0, 0]
-    int[] b = {4, 2, 7, 1};                // declared with values
-    int[] c = new int[]{1, 2, 3};          // same, useful when passing directly
-    Arrays.fill(a, -1);                    // [-1, -1, -1, -1, -1]
-    int n = b.length;                      // 4  (field, no brackets)
-    int last = b[b.length - 1];            // 1
-    Arrays.sort(b);                        // [1, 2, 4, 7]
-    Arrays.sort(c, 0, 2);                  // sort only indices 0..1
-    int[] copy = b.clone();                // or Arrays.copyOf(b, b.length)
-    int[] part = Arrays.copyOfRange(b, 1, 3);       // [2, 4]  (end exclusive)
-    int[] bigger = Arrays.copyOf(b, 6);             // [1, 2, 4, 7, 0, 0]
-    boolean eq = Arrays.equals(b, copy);            // true (== would compare references)
-    int pos = Arrays.binarySearch(b, 4);            // 2  (array must be sorted)
-    int sum = Arrays.stream(b).sum();               // 14
-    int max = Arrays.stream(b).max().getAsInt();    // 7
-    Integer[] boxed = {3, 1, 2};
-    Arrays.sort(boxed, Collections.reverseOrder()); // [3, 2, 1] — descending needs Integer[]
-    boolean[] seen = new boolean[10];      // all false
-    long[] pre = new long[n + 1];          // prefix sums, all 0
-    String[] names = new String[2];        // [null, null]
-    char[] cs = {'d', 'a', 'c'};
-    Arrays.sort(cs);                       // [a, c, d]
-    System.out.println(Arrays.toString(b));         // [1, 2, 4, 7]
-}`, tc:'sort O(n log n) · fill/copy O(n)', sc:'O(n)' },
-  { id:'array-2d', t:'2D and 3D arrays: dp tables filled with −1', k:'grid, visited matrix, dp[n][m] memo initialised to −1',
-    d:'A 2D array is an array of rows. <code>Arrays.fill</code> takes one row, so loop over the rows. <code>m.length</code> is the row count and <code>m[0].length</code> the column count.',
-    v:D('new int[3][4] filled with −1 row by row.', GRID([['','c0','c1','c2','c3'],['r0','-1','-1','-1','-1'],['r1','-1','-1','-1','-1'],['r2','-1','-1','-1','-1']],{hl:['1,1','1,2','1,3','1,4']})),
-    c:`
-void array2DDemo() {
-    int[][] grid = new int[3][4];                  // 3 rows × 4 columns, all 0
-    int[][] m = {{1, 2, 3}, {4, 5, 6}};            // declared with values
-    int rows = m.length, cols = m[0].length;       // 2, 3
-    int[][] dp = new int[3][4];
-    for (int[] row : dp) Arrays.fill(row, -1);     // every cell = -1
-    long[][] memo = new long[5][5];
-    for (long[] row : memo) Arrays.fill(row, Long.MAX_VALUE);
-    boolean[][] vis = new boolean[3][3];           // all false
-    char[][] board = new char[2][2];
-    for (char[] row : board) Arrays.fill(row, '.');
-    int[][] jagged = new int[3][];                 // rows of different lengths
-    jagged[0] = new int[]{1};
-    jagged[1] = new int[]{1, 2};
-    jagged[2] = new int[3];
-    int[][] copy = new int[m.length][];
-    for (int i = 0; i < m.length; i++) copy[i] = m[i].clone();   // deep copy
-    int[][] intervals = {{5, 6}, {1, 3}, {2, 4}};
-    Arrays.sort(intervals, (x, y) -> Integer.compare(x[0], y[0]));  // sort rows by column 0
-    for (int i = 0; i < rows; i++) {               // print row by row
-        for (int j = 0; j < cols; j++) System.out.print(m[i][j] + " ");
-        System.out.println();
-    }
-    System.out.println(Arrays.deepToString(m));    // [[1, 2, 3], [4, 5, 6]]
-    int[][][] dp3 = new int[2][3][4];              // 3D: dp[i][j][k]
-    for (int[][] layer : dp3) for (int[] row : layer) Arrays.fill(row, -1);
-    int[] dr = {-1, 0, 1, 0}, dc = {0, 1, 0, -1};  // up, right, down, left
-}`, tc:'O(rows · cols)', sc:'O(rows · cols)', w:'<code>Arrays.fill(dp, -1)</code> on a 2D array does not compile, and <code>Arrays.fill(dp, new int[4])</code> makes every row the SAME array.' }
- ]},
- { h:'Strings and StringBuilder', ps:[
-  { id:'string-methods', t:'String: create, read, compare, split', k:'length, charAt, substring, indexOf, equals, split, toCharArray',
-    d:'Strings never change; every method returns a new String. Compare contents with <code>equals</code>, order with <code>compareTo</code>.',
-    v:D('substring(1, 4) takes indices 1, 2, 3; the end index is excluded.', A('h e l l o',{hl:['1-3'], p:{1:'begin', 4:'end (excluded)'}})),
-    c:`
-void stringDemo() {
-    String s = "hello";                    // literal
-    String t = new String("hello");        // new object, same content
-    String empty = "";
-    String fromChars = new String(new char[]{'h', 'i'});   // "hi"
-    String rep = "ab".repeat(3);           // "ababab"
-    int n = s.length();                    // 5  (method, with brackets)
-    char c = s.charAt(1);                  // 'e'
-    String sub = s.substring(1, 4);        // "ell"
-    String tail = s.substring(2);          // "llo"
-    int i = s.indexOf('l');                // 2  (-1 if absent)
-    int j = s.lastIndexOf('l');            // 3
-    int k = s.indexOf("lo");               // 3
-    boolean has = s.contains("ell");       // true
-    boolean same = s.equals(t);            // true  — never use == for content
-    boolean sameIC = s.equalsIgnoreCase("HELLO");   // true
-    int cmp = "apple".compareTo("banana"); // negative: "apple" sorts first
-    boolean st = s.startsWith("he"), en = s.endsWith("lo");   // true, true
-    String up = s.toUpperCase();           // "HELLO"
-    String trimmed = "  hi  ".trim();      // "hi"
-    String replaced = s.replace('l', 'L'); // "heLLo"
-    String[] parts = "a,b,c".split(",");   // [a, b, c]
-    String[] words = "  the  sky ".trim().split(" +");   // [the, sky]
-    String joined = String.join("-", parts);              // "a-b-c"
-    char[] arr = s.toCharArray();
-    Arrays.sort(arr);
-    String sorted = new String(arr);       // "ehllo"
-    boolean isEmpty = empty.isEmpty();     // true
-    for (char ch : s.toCharArray()) { }    // loop over characters
-    for (int x = 0; x < s.length(); x++) { char ch = s.charAt(x); }
-}`, tc:'most methods O(length)', sc:'new String per call' },
-  { id:'stringbuilder', t:'StringBuilder: build and edit text', k:'append, insert, delete, deleteCharAt, reverse, setCharAt, charAt, substring, indexOf, toString',
-    d:'Use it whenever you build text piece by piece; <code>s += x</code> inside a loop copies the whole string every time (O(n²)).',
-    c:`
-void builderDemo() {
-    StringBuilder sb = new StringBuilder();       // or new StringBuilder("abc")
-    sb.append("ab").append(1).append('c');        // "ab1c"
-    sb.insert(0, 'x');                            // "xab1c"
-    sb.insert(1, "YZ");                           // insert(index, String) → "xYZab1c"
-    sb.delete(1, 3);                              // delete(start, end), end excluded → "xab1c"
-    sb.setCharAt(1, 'A');                         // "xAb1c"
-    sb.deleteCharAt(sb.length() - 1);             // "xAb1"  (remove last char)
-    sb.reverse();                                 // "1bAx"
-    char c = sb.charAt(0);                        // '1'
-    int len = sb.length();                        // 4
-    int at = sb.indexOf("A");                     // 2   (-1 if absent)
-    String part = sb.substring(1, 3);             // "bA" (end excluded)
-    String tail = sb.substring(2);                // "Ax"
-    String result = sb.toString();                // "1bAx"
-    sb.setLength(0);                              // clear it
-    String rev = new StringBuilder("level").reverse().toString();   // reverse a String
-    boolean isPal = rev.equals("level");          // true
-}`, tc:'append O(1) amortized · insert/delete O(n)', sc:'O(n)' }
- ]},
- { h:'Collections: List, Stack, Queue, Deque, PriorityQueue', ps:[
-  { id:'arraylist', t:'ArrayList', k:'add, get, set, remove, contains, indexOf, size, isEmpty, clear, toArray; list of lists for graphs',
-    c:`
-void listDemo() {
-    List<Integer> list = new ArrayList<>();
-    list.add(5); list.add(3); list.add(8);           // [5, 3, 8]
-    list.add(0, 1);                                  // insert at index 0 → [1, 5, 3, 8]
-    int first = list.get(0);                         // 1
-    list.set(1, 9);                                  // [1, 9, 3, 8]
-    list.remove(Integer.valueOf(3));                 // remove the VALUE 3 → [1, 9, 8]
-    list.remove(0);                                  // remove INDEX 0 → [9, 8]
-    int size = list.size();                          // 2
-    boolean has = list.contains(8);                  // true
-    int where = list.indexOf(8);                     // 1
-    Collections.sort(list);                          // [8, 9]
-    list.sort(Collections.reverseOrder());           // [9, 8]
-    Collections.reverse(list);                       // [8, 9]
-    int mx = Collections.max(list);                  // 9
-    boolean empty = list.isEmpty();                  // false
-    Integer[] boxed = list.toArray(new Integer[0]);  // List → Integer[] : [8, 9]
-    List<Integer> temp = new ArrayList<>(list);
-    temp.addAll(List.of(1, 2));                      // [8, 9, 1, 2]
-    temp.clear();                                    // remove everything → []
-    boolean nowEmpty = temp.isEmpty();               // true
-    List<Integer> fixed = Arrays.asList(1, 2, 3);    // fixed size: add() throws
-    List<Integer> frozen = List.of(4, 5);            // immutable
-    List<Integer> editable = new ArrayList<>(fixed); // copy you can change
-    List<List<Integer>> adj = new ArrayList<>();     // list of lists (graphs)
-    for (int i = 0; i < 3; i++) adj.add(new ArrayList<>());
-    adj.get(0).add(2);
-    int[] arr = list.stream().mapToInt(Integer::intValue).toArray();   // List → int[]
-    for (int x : list) System.out.print(x + " ");    // 8 9
-    System.out.println();
-}`, tc:'get/set/add at end O(1) · add/remove at index O(n)', sc:'O(n)', w:'<code>list.remove(3)</code> removes INDEX 3. To remove the value 3 write <code>list.remove(Integer.valueOf(3))</code>.' },
-  { id:'stack-syntax', t:'Stack: declaration and methods', k:'push, pop, peek, isEmpty, size, plus add, get, remove, contains, search, clear',
-    d:'Both <code>Stack&lt;Integer&gt;</code> and <code>Deque&lt;Integer&gt; = new ArrayDeque&lt;&gt;()</code> offer <code>push / pop / peek</code>. ArrayDeque is faster; Stack is fine for practice and is what many tutorials use.',
-    v:D('push puts on top; pop and peek use the top.', ROW(STK('10 20 30',{cap:'after 3 pushes', on:[2]}), NOTE('peek() → 30<br>pop() → 30<br>top is now 20'))),
-    c:`
-void stackDemo() {
-    Stack<Integer> st = new Stack<>();
-    st.push(10); st.push(20); st.push(30);     // bottom 10, 20, 30 top
-    int top = st.peek();                       // 30 (look, keep it)
-    int popped = st.pop();                     // 30 (remove and return)
-    boolean empty = st.isEmpty();              // false
-    int size = st.size();                      // 2
-    Deque<Integer> dq = new ArrayDeque<>();    // faster stack, same three methods
-    dq.push(1); dq.push(2);
-    int t2 = dq.peek();                        // 2
-    dq.pop();                                  // removes 2
-    Stack<Character> brackets = new Stack<>(); // stack of chars (valid parentheses)
-    brackets.push('(');
-    Stack<int[]> pairs = new Stack<>();        // stack of pairs {value, index}
-    pairs.push(new int[]{5, 0});
-    while (!st.isEmpty()) System.out.print(st.pop() + " ");   // 20 10
-    System.out.println();
-    // Stack is also a list (it extends Vector), so these work too:
-    Stack<Integer> s2 = new Stack<>();
-    s2.push(5); s2.add(6);                     // add(obj) also puts on top → [5, 6]
-    s2.add(0, 4);                              // add(index, val) → [4, 5, 6] (index 0 = bottom)
-    int bottom = s2.get(0);                    // 4
-    int topAgain = s2.get(s2.size() - 1);      // 6  (same as peek())
-    s2.remove(Integer.valueOf(5));             // remove(obj): the VALUE 5 → [4, 6]
-    s2.remove(0);                              // remove(index): INDEX 0 → [6]
-    boolean has6 = s2.contains(6);             // true
-    int fromTop = s2.search(6);                // 1 (1-based position from the top, -1 if absent)
-    s2.clear();                                // remove everything
-    boolean nowEmpty = s2.isEmpty();           // true
-}`, tc:'push/pop/peek O(1) · add(i)/remove(i)/contains O(n)', sc:'O(n)', w:'Calling <code>pop()</code> or <code>peek()</code> on an empty <code>Stack</code> throws. Always check <code>!st.isEmpty()</code> first.' },
-  { id:'queue-syntax', t:'Queue and Deque: declaration and methods', k:'offer, poll, peek; add or remove at both ends',
-    d:'<code>Queue</code> is an interface: create it with <code>new LinkedList&lt;&gt;()</code> or <code>new ArrayDeque&lt;&gt;()</code>. <code>offer / poll / peek</code> return false or null instead of throwing; <code>add / remove / element</code> throw.',
-    v:D('Elements leave from the front in the order they arrived. Each action has a throwing and a non-throwing method.', A('1 2 3',{on:[0], p:{0:'front (poll)', 2:'back (offer)'}}), GRID([['action','throws an exception','returns false / null'],['insert at back','add(e)','offer(e)'],['remove front','remove()','poll()'],['look at front','element()','peek()']],{on:['1,2','2,2','3,2']})),
-    c:`
-void queueDemo() {
-    Queue<Integer> q = new LinkedList<>();     // or new ArrayDeque<>()
-    q.offer(1); q.offer(2); q.offer(3);        // front 1, 2, 3 back
-    int front = q.peek();                      // 1 (null if empty)
-    int out = q.poll();                        // 1 (null if empty)
-    int size = q.size();                       // 2
-    boolean empty = q.isEmpty();               // false
-    q.add(4);                                  // same as offer → [2, 3, 4]
-    int f2 = q.element();                      // same as peek, but throws if empty → 2
-    int r2 = q.remove();                       // same as poll, but throws if empty → 2
-    boolean has3 = q.contains(3);              // true
-    q.clear();                                 // remove everything
-    Queue<Integer> pq = new PriorityQueue<>(); // a Queue that always gives the smallest first
-    pq.offer(5); pq.offer(1);
-    int small = pq.poll();                     // 1
-    Deque<Integer> dq = new ArrayDeque<>();    // double-ended queue
-    dq.offerFirst(2); dq.offerLast(3); dq.offerFirst(1);   // 1 2 3
-    int f = dq.peekFirst(), l = dq.peekLast();             // 1, 3
-    dq.pollFirst();                            // removes 1
-    dq.pollLast();                             // removes 3 → [2]
-    Queue<int[]> cells = new ArrayDeque<>();   // queue of {row, col} for grid BFS
-    cells.offer(new int[]{0, 0});
-    int[] cell = cells.poll();
-}`, tc:'O(1) per op', sc:'O(n)' },
-  { id:'pq-syntax', t:'PriorityQueue: min-heap, max-heap, custom order', k:'always take the smallest or largest next',
-    c:`
-void priorityQueueDemo() {
-    PriorityQueue<Integer> minH = new PriorityQueue<>();                         // smallest first
-    PriorityQueue<Integer> maxH = new PriorityQueue<>(Collections.reverseOrder()); // largest first
-    minH.offer(5); minH.offer(1); minH.offer(3);
-    int smallest = minH.peek();                // 1
-    minH.poll();                               // removes 1
-    maxH.addAll(List.of(5, 1, 3));
-    int largest = maxH.poll();                 // 5
-    PriorityQueue<int[]> pq = new PriorityQueue<>((a, b) -> Integer.compare(a[0], b[0]));   // by first value
-    pq.offer(new int[]{4, 0});
-    pq.offer(new int[]{2, 1});
-    int[] best = pq.poll();                    // {2, 1}
-    int size = minH.size();                    // 2
-}`, tc:'offer/poll O(log n) · peek O(1)', sc:'O(n)' }
- ]},
- { h:'Maps and sets', ps:[
-  { id:'hashmap-syntax', t:'HashMap: put, get, count, iterate', k:'put, get, getOrDefault, putIfAbsent, containsKey, containsValue, remove, keySet, size, isEmpty, clear',
-    c:`
-void mapDemo() {
-    Map<String, Integer> map = new HashMap<>();
-    map.put("apple", 3);                       // insert or overwrite
-    map.put("kiwi", 1);
-    int a = map.get("apple");                  // 3  (get returns null if the key is missing)
-    int b = map.getOrDefault("mango", 0);      // 0
-    boolean hasKey = map.containsKey("kiwi");  // true
-    boolean hasVal = map.containsValue(3);     // true
-    map.put("kiwi", map.getOrDefault("kiwi", 0) + 1);   // count++ → 2
-    map.merge("kiwi", 1, Integer::sum);        // count++ → 3 (shorter form)
-    map.remove("apple");                       // remove(key)
-    map.putIfAbsent("kiwi", 100);              // key exists → stays 3
-    map.putIfAbsent("fig", 7);                 // new key → added
-    int size = map.size();                     // 2
-    boolean none = map.isEmpty();              // false
-    for (String key : map.keySet())            // loop over keys
-        System.out.println("key: " + key + " value: " + map.get(key));
-    for (Map.Entry<String, Integer> e : map.entrySet())   // keys and values together
-        System.out.println(e.getKey() + " = " + e.getValue());
-    for (int val : map.values()) { }           // loop over values only
-    Map<Integer, List<Integer>> groups = new HashMap<>();
-    groups.computeIfAbsent(1, x -> new ArrayList<>()).add(10);  // map of lists
-    map.clear();                               // remove everything
-    boolean nowEmpty = map.isEmpty();          // true
-}`, tc:'O(1) average per op', sc:'O(n)', w:'<code>int a = map.get(key)</code> throws a NullPointerException when the key is missing. Use <code>getOrDefault</code>.' },
-  { id:'set-treemap', t:'HashSet, TreeSet, TreeMap', k:'remove duplicates, “seen before?”, sorted keys with floor / ceiling',
-    c:`
-void setDemo() {
-    Set<Integer> set = new HashSet<>();
-    set.add(3); set.add(1); set.add(3);        // duplicates ignored → size 2
-    boolean added = set.add(5);                // true (false if already present)
-    boolean has = set.contains(1);             // true
-    set.remove(1);
-    int size = set.size();                     // 2
-    Set<Character> seen = new HashSet<>();     // e.g. characters seen so far
-    TreeSet<Integer> ts = new TreeSet<>(List.of(10, 20, 30));   // always sorted
-    int lo = ts.first(), hi = ts.last();       // 10, 30
-    Integer fl = ts.floor(25), ce = ts.ceiling(25);   // 20, 30 (null if none)
-    Integer above = ts.higher(30);             // null
-    TreeMap<Integer, String> tm = new TreeMap<>();    // map sorted by key
-    tm.put(5, "five"); tm.put(1, "one");
-    int firstKey = tm.firstKey();              // 1
-    Integer fk = tm.floorKey(4);               // 1
-    Set<Integer> ordered = new LinkedHashSet<>();     // keeps insertion order
-}`, tc:'Hash O(1) avg · Tree O(log n)', sc:'O(n)' }
- ]},
- { h:'Traps', ps:[
-  { t:'Traps that fail hidden test cases', k:'overflow, Integer comparison, recursion depth, empty input',
-    d:`<ul>
-<li><code>int</code> holds about ±2.1 × 10⁹. A sum of 10⁵ values up to 10⁹ needs <code>long</code>; cast before multiplying: <code>(long) a * b</code>.</li>
-<li><code>mid = lo + (hi − lo) / 2</code>, not <code>(lo + hi) / 2</code>.</li>
-<li><code>Math.abs(Integer.MIN_VALUE)</code> is still negative.</li>
-<li>Comparators: <code>Integer.compare(a, b)</code>, not <code>a − b</code>.</li>
-<li><code>Integer</code> objects: compare with <code>.equals()</code>. <code>==</code> only works by luck for −128..127 (e.g. <code>list.get(i) == list.get(j)</code>).</li>
-<li>Recursion deeper than about 10⁴ frames can throw <code>StackOverflowError</code>: switch to iteration or an explicit stack.</li>
-<li>Always test: empty input, one element, all equal, negatives, duplicates, already sorted.</li></ul>` }
+}`, tc:'O(input)', sc:'O(input)' }
  ]}
 ],
 after:`
 <section class="sec"><h2>What each collection operation costs</h2>
 <div class="tw"><table><thead><tr><th>Need</th><th>Java</th><th>Add</th><th>Remove</th><th>Lookup</th><th>Note</th></tr></thead><tbody>
 <tr><td>Fixed array</td><td class="m">int[]</td><td class="m">—</td><td class="m">—</td><td class="m g1">a[i] O(1)</td><td>Size fixed at creation</td></tr>
-<tr><td>Resizable array</td><td class="m">ArrayList</td><td class="m g1">O(1)*</td><td class="m g3">O(n)</td><td class="m">get O(1) · contains O(n)</td><td>* amortized at the end</td></tr>
+<tr><td>Resizable array</td><td class="m">ArrayList</td><td class="m g1">O(1)*</td><td class="m g3">O(n)</td><td class="m">get O(1) · contains O(n)</td><td>* at the end</td></tr>
 <tr><td>Stack</td><td class="m">Stack, ArrayDeque</td><td class="m g1">push O(1)</td><td class="m g1">pop O(1)</td><td class="m">peek O(1)</td><td>ArrayDeque is faster</td></tr>
 <tr><td>Queue / deque</td><td class="m">ArrayDeque, LinkedList</td><td class="m g1">offer O(1)</td><td class="m g1">poll O(1)</td><td class="m">peek O(1)</td><td>ArrayDeque has no nulls</td></tr>
 <tr><td>Hash map / set</td><td class="m">HashMap, HashSet</td><td class="m g1">O(1) avg</td><td class="m g1">O(1) avg</td><td class="m">O(1) avg</td><td>No order</td></tr>
-<tr><td>Sorted map / set</td><td class="m">TreeMap, TreeSet</td><td class="m g2">O(log n)</td><td class="m g2">O(log n)</td><td class="m">O(log n) · floor / ceiling</td><td>Red-black tree</td></tr>
+<tr><td>Sorted map / set</td><td class="m">TreeMap, TreeSet</td><td class="m g2">O(log n)</td><td class="m g2">O(log n)</td><td class="m">O(log n) · floor / ceiling</td><td>Always sorted</td></tr>
 <tr><td>Heap</td><td class="m">PriorityQueue</td><td class="m g2">O(log n)</td><td class="m g2">poll O(log n)</td><td class="m">peek O(1) · remove(x) O(n)</td><td>Min-heap by default</td></tr>
-<tr><td>Mutable string</td><td class="m">StringBuilder</td><td class="m g1">append O(1)*</td><td class="m g3">deleteCharAt O(n)</td><td class="m">charAt O(1)</td><td>String itself is immutable</td></tr>
+<tr><td>Mutable string</td><td class="m">StringBuilder</td><td class="m g1">append O(1)*</td><td class="m g3">deleteCharAt O(n)</td><td class="m">charAt O(1)</td><td>String itself never changes</td></tr>
 </tbody></table></div></section>
 <section class="sec"><h2>Core algorithm costs</h2>
 <div class="tw"><table><thead><tr><th>Algorithm</th><th>Time</th><th>Space</th></tr></thead><tbody>
@@ -1001,6 +968,7 @@ after:`
 <tr><td>Trie insert / search</td><td class="m g2">O(L)</td><td class="m">O(total chars)</td></tr>
 </tbody></table></div></section>`
 });
+})();
 </script>
 
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&display=swap">
@@ -1124,6 +1092,97 @@ html:`<div class="nb" role="document" aria-label="Handwritten-style notes of Jav
 </div>
 <p class="foot" style="margin-top:14px">Full examples with outputs for every method on this sheet are in <a href="#toolkit">Java Toolkit</a>.</p>`
 });
+</script>
+
+<script>
+(function(){
+const ul = (...x) => `<ul>${x.map(i => `<li>${i}</li>`).join('')}</ul>`;
+const cols = ['Edge case', 'Try this input', 'What breaks', 'Fix', 'Fix in code'];
+T.push({ id:'edge-cases', name:'Edge Cases', g:'!?', fam:'Start', o:1.7, step:'Test before submit', alias:'edge cases corner cases test cases overflow empty input negative duplicates zero impossible modulo wrong answer runtime error tle',
+core:'Most "Wrong Answer" and "Runtime Error" results come from the same few inputs. Run your code on these before you submit.',
+recall:[
+ 'Always try: smallest input, largest input, all negatives, all duplicates, all zeros, impossible case, and the exact MOD.',
+ 'Overflow: if any value or sum can pass 2 × 10⁹, use <code>long</code>.',
+ 'Start a max at <code>Integer.MIN_VALUE</code> (or <code>a[0]</code>), never at 0.',
+ 'Read the output rule: return −1? 0? empty list? print "NO"?'
+],
+tables:[
+ { id:'tbl-must', h:'Always test these 7', cols, cls:'edge', compile:false, rows:[
+  ['<b>Smallest input</b>', '<code>N = 1</code>, <code>K = 1</code>, <code>N = 0</code>, empty array or string', 'Index out of bounds: <code>a[1]</code> or <code>a[n-1]</code> when n is 0 or 1.',
+   ul('Return early for n = 0 / n = 1.', 'Check <code>i + 1 &lt; n</code> before reading <code>a[i + 1]</code>.'), `if (n == 0) return 0;
+if (n == 1) return a[0];`],
+  ['<b>Largest numbers</b>', 'Max constraints: <code>N = 10^5</code>, values <code>10^9</code>', 'int overflow: <code>a * b</code> or a big sum wraps to a negative number.',
+   ul('Use <code>long</code> for sums and products.', 'Cast <b>before</b> multiplying.', '<code>mid = lo + (hi - lo) / 2</code>.'), `long sum = 0;   // not int
+long p = (long) a * b;`],
+  ['<b>All negatives</b>', '<code>[-5, -2, -10]</code>', 'Max starts at 0, so the answer wrongly stays 0.',
+   ul('Start max at <code>Integer.MIN_VALUE</code> or <code>a[0]</code>.', 'Start min at <code>Integer.MAX_VALUE</code>.'), `int best = Integer.MIN_VALUE;
+for (int x : a) best = Math.max(best, x);`],
+  ['<b>All duplicates</b>', '<code>[3, 3, 3, 3]</code>', '<code>&lt;</code> vs <code>&lt;=</code> bugs, repeated answers, two pointers that never move.',
+   ul('Decide: strict (<code>&lt;</code>) or not (<code>&lt;=</code>)?', 'Skip equal neighbours to avoid repeated answers.'), `while (l < r && a[l] == a[l + 1]) l++;   // skip duplicates`],
+  ['<b>All zeros</b>', '<code>[0, 0, 0]</code>', 'Division by zero; product is always 0; prefix-sum map misses subarrays starting at 0.',
+   ul('Check the divisor before dividing.', 'Seed the prefix map with <code>{0: 1}</code>.'), `if (b == 0) return -1;      // or skip
+cnt.put(0, 1);              // prefix-sum map`],
+  ['<b>Impossible case</b>', '<code>K &gt; N</code>, target not reachable, no path', 'Crash or a garbage answer instead of the required −1 / 0.',
+   ul('Check it first and return what the problem asks.', 'Use INF as "not found" and convert at the end.'), `if (k > n) return -1;
+return dist[t] == INF ? -1 : dist[t];`],
+  ['<b>Modulo</b>', 'Answer "modulo 10^9 + 7" (or 10000, 998244353…)', 'Wrong MOD value, or % applied only at the end, so the number overflows first.',
+   ul('Copy the exact MOD from the problem.', 'Apply % after <b>every</b> add / multiply.', 'Subtraction: <code>(a - b + MOD) % MOD</code>.'), `ans = (ans + x) % MOD;
+ans = ans * y % MOD;        // ans is long`]
+ ]},
+ { id:'tbl-more', h:'More edge cases by topic', cols, cls:'edge', compile:false, rows:[
+  ['<b>Already sorted / reverse sorted</b>', '<code>[1, 2, 3, 4]</code>, <code>[4, 3, 2, 1]</code>', 'Quick sort becomes O(n²); "first dip" logic finds nothing.',
+   ul('Pick a random pivot.', 'Handle the "no change needed" case.'), `int r = lo + new Random().nextInt(hi - lo + 1);
+swap(a, lo, r);   // random pivot`],
+  ['<b>Value not present</b>', 'Search for 6 in <code>[1, 3, 5]</code>', 'Binary search / lower bound returns n, then <code>a[n]</code> crashes.',
+   ul('Check the index before using it.'), `int i = lowerBound(a, x);
+if (i == n || a[i] != x) return -1;`],
+  ['<b>Odd and even length</b>', '<code>n = 4</code> and <code>n = 5</code>', 'Off-by-one in the middle, median or palindrome check.',
+   ul('Test both lengths.', 'Even median = average of the two middles.'), `double med = (n % 2 == 1) ? a[n / 2]
+           : (a[n / 2 - 1] + a[n / 2]) / 2.0;`],
+  ['<b>Integer.MIN_VALUE</b>', '<code>-2147483648</code>', '<code>Math.abs</code> and <code>-x</code> stay negative (overflow).',
+   ul('Move to long before abs or negation.'), `long v = Math.abs((long) x);`],
+  ['<b>Empty / one-char string</b>', '<code>""</code>, <code>"a"</code>, <code>"aaaa"</code>', '<code>charAt(0)</code> on empty string; substring range errors.',
+   ul('Return early for empty strings.', 'Test a string with one repeated letter.'), `if (s.isEmpty()) return 0;`],
+  ['<b>Linked list: null, 1 node, 2 nodes</b>', '<code>head = null</code>, <code>[1]</code>, <code>[1, 2]</code>', '<code>head.next</code> or <code>fast.next.next</code> throws NullPointerException.',
+   ul('Guard the start.', 'Loop on <code>fast != null &amp;&amp; fast.next != null</code>.', 'Use a dummy node when the head can change.'), `if (head == null || head.next == null) return head;
+ListNode dummy = new ListNode(0, head);`],
+  ['<b>Tree: null root, one-sided tree</b>', '<code>root = null</code>; every node only has a left child', 'NullPointerException; very deep recursion (10⁵ levels) → StackOverflowError.',
+   ul('Check null first.', 'For very deep trees, use a loop with a stack/queue.'), `if (root == null) return 0;`],
+  ['<b>Graph: not connected</b>', 'Two separate groups; a node with no edges', 'BFS/DFS from node 0 only misses the other groups.',
+   ul('Start a search from every unvisited node.'), `for (int i = 0; i < n; i++)
+    if (!vis[i]) dfs(i);`],
+  ['<b>Graph: self-loop or repeated edge</b>', '<code>u = v</code>, the same edge twice', 'Wrong cycle check or wrong degree counts.',
+   ul('Decide how the problem treats them; use a visited check.'), ''],
+  ['<b>Grid: 1×1, one row, borders</b>', '<code>[[5]]</code>, <code>[[1, 2, 3]]</code>', 'Going outside the grid at the edges.',
+   ul('Check bounds before reading a neighbour.'), `if (r < 0 || c < 0 || r >= R || c >= C) continue;`],
+  ['<b>Window size k</b>', '<code>k = 1</code>, <code>k = n</code>, <code>k &gt; n</code>', 'Empty result array, negative array size, or a wrong first window.',
+   ul('Handle k &gt; n before creating arrays.'), `if (k > n) return new int[0];
+int[] res = new int[n - k + 1];`],
+  ['<b>Ties when sorting</b>', 'Equal keys, e.g. same start time', 'Order of equal items is not what the problem wants; <code>a - b</code> comparator overflows.',
+   ul('Add a second key for ties.', 'Use <code>Integer.compare</code>.'), `Arrays.sort(iv, (x, y) -> x[0] != y[0] ? Integer.compare(x[0], y[0])
+                                      : Integer.compare(x[1], y[1]));`],
+  ['<b>Integer objects with ==</b>', 'Values above 127 in a List / Map', '<code>list.get(i) == list.get(j)</code> becomes false for equal values.',
+   ul('Compare with <code>.equals()</code> or unbox to int.'), `if (list.get(i).equals(list.get(j))) { }
+int x = list.get(i);   // unbox, then == is safe`],
+  ['<b>Max N with a slow loop</b>', '<code>N = 10^5</code> with nested loops', 'Time Limit Exceeded: O(n²) is 10¹⁰ steps.',
+   ul('Check the constraints table on the Pattern Finder tab.', 'Aim for O(n log n) or O(n).'), ''],
+  ['<b>Changing a list while looping</b>', 'Remove items inside a for-each', 'ConcurrentModificationException.',
+   ul('Use <code>removeIf</code> or an iterator.'), `list.removeIf(x -> x % 2 == 0);`],
+  ['<b>Scanner: nextInt then nextLine</b>', '<code>5</code> then a sentence', 'nextLine() returns "" (the rest of the number line).',
+   ul('Call <code>sc.nextLine()</code> once after the numbers.'), `int n = sc.nextInt(); sc.nextLine();
+String line = sc.nextLine();`]
+ ]},
+ { id:'tbl-checklist', h:'Checklist before you submit', cols:['Check', 'Why'], code:false, rows:[
+  ['Run the sample input once more after your last change.', 'A last-minute edit often breaks the basic case.'],
+  ['Remove debug prints.', 'Extra output = Wrong Answer.'],
+  ['Return / print exactly the required format.', '"YES" vs "Yes", spaces, new lines, −1 vs 0.'],
+  ['Reset global arrays and counters between test cases.', 'Values from the previous case leak into the next one.'],
+  ['Count your loops against the constraints.', 'Catches TLE before the judge does.'],
+  ['Make sure every path returns a value.', 'Missing return or an uncovered branch gives wrong output.']
+ ]}
+]
+});
+})();
 </script>
 
 <script>
@@ -5151,6 +5210,704 @@ int countSquares(int[][] m) {
 </script>
 
 <script>
+/* Short view: one simple sentence + the key code lines for every pattern card. Key = topic--card id. */
+window.SHORT = window.SHORT || {};
+window.SS = (topic, map) => { for (const k in map) SHORT[topic + '--' + k] = map[k]; };
+
+SS('toolkit', {
+ 'scanner': ['Read numbers with nextInt(). Call nextLine() once before reading a full line.', `Scanner sc = new Scanner(System.in);
+int n = sc.nextInt(); sc.nextLine();
+String line = sc.nextLine();`],
+ 'read-a-matrix-and-a-character-grid': ['Two loops of nextInt() for numbers; next().toCharArray() for a row of characters.', `for (int i = 0; i < r; i++)
+    for (int j = 0; j < c; j++) m[i][j] = sc.nextInt();
+grid[i] = sc.next().toCharArray();`],
+ 'test-cases-and-reading-until-input-ends': ['Loop T times, or keep reading while there is input.', `int t = sc.nextInt();
+while (t-- > 0) { /* one case */ }
+while (sc.hasNextInt()) { int x = sc.nextInt(); }`],
+ 'main-template': ['Class Main with main(). Build output in a StringBuilder and print once.', `public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+    StringBuilder out = new StringBuilder();
+    System.out.print(out); }`],
+ 'fast-input-with-bufferedreader': ['For big input: read lines with BufferedReader, split with StringTokenizer.', `BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+StringTokenizer st = new StringTokenizer(br.readLine());
+int n = Integer.parseInt(st.nextToken());`]
+});
+
+SS('maths', {
+ 'digit-extraction': ['n % 10 gives the last digit, n / 10 removes it. Repeat until n is 0.', `while (n > 0) {
+    int d = n % 10;  rev = rev * 10 + d;  n /= 10;
+}`],
+ 'divisors-up-to-n': ['Divisors come in pairs (i, n / i), so only loop i up to √n.', `for (int i = 1; i * i <= n; i++)
+    if (n % i == 0) { add(i); if (i != n / i) add(n / i); }`],
+ 'gcd-hcf-by-euclid': ['gcd(a, b) = gcd(b, a % b) until b becomes 0.', `int gcd(int a, int b) { return b == 0 ? a : gcd(b, a % b); }
+long lcm = (long) a / gcd(a, b) * b;`],
+ 'sieve-of-eratosthenes': ['Mark every number prime, then cross out the multiples of each prime.', `for (int i = 2; i * i <= n; i++)
+    if (prime[i]) for (int j = i * i; j <= n; j += i) prime[j] = false;`],
+ 'prime-factorization-trial-division-spf': ['Divide out each factor while it divides n. A leftover above 1 is also prime.', `for (int i = 2; i * i <= n; i++)
+    while (n % i == 0) { add(i); n /= i; }
+if (n > 1) add(n);`],
+ 'fast-power-and-modular-arithmetic': ['Square the base each step; multiply it in when the current bit of the power is 1.', `while (e > 0) {
+    if ((e & 1) == 1) res = res * b % MOD;
+    b = b * b % MOD;  e >>= 1; }`]
+});
+
+SS('hashing', {
+ 'frequency-counting': ['Count how often each value appears: int[26] for letters, HashMap otherwise.', `int[] f = new int[26];
+for (char c : s.toCharArray()) f[c - 'a']++;
+map.merge(x, 1, Integer::sum);`],
+ 'two-sum': ['For each number, check if (target − number) was seen before.', `Integer j = seen.get(target - a[i]);
+if (j != null) return new int[]{j, i};
+seen.put(a[i], i);`],
+ 'prefix-sum-map': ['Running sum; count earlier sums equal to (sum − K). Start the map with {0: 1}.', `cnt.put(0, 1);
+for (int x : a) { pre += x; ans += cnt.getOrDefault(pre - k, 0);
+                  cnt.merge(pre, 1, Integer::sum); }`],
+ 'longest-subarray-with-sum-k-keep-the-first-index': ['Same as above, but store the FIRST index of each sum to get the longest length.', `if (first.containsKey(pre - k)) best = Math.max(best, i - first.get(pre - k));
+first.putIfAbsent(pre, i);`],
+ 'count-subarrays-with-xor-k': ['Like prefix sum, but with XOR: look for (xor ^ K).', `x ^= v;
+ans += cnt.getOrDefault(x ^ k, 0);
+cnt.merge(x, 1, Integer::sum);`],
+ 'longest-consecutive': ['Put all in a set. Start counting only at numbers whose (x − 1) is missing.', `if (!set.contains(x - 1)) {
+    int len = 1; while (set.contains(x + len)) len++;
+    best = Math.max(best, len); }`],
+ 'group-by-a-signature-key': ['Give each word a key (its sorted letters) and group words with the same key.', `char[] c = s.toCharArray(); Arrays.sort(c);
+g.computeIfAbsent(new String(c), k -> new ArrayList<>()).add(s);`]
+});
+
+SS('sorting', {
+ 'selection-sort': ['Find the smallest in the rest and swap it to the front.', `for (int i = 0; i < n - 1; i++) {
+    int min = i; for (int j = i + 1; j < n; j++) if (a[j] < a[min]) min = j;
+    swap(a, i, min); }`],
+ 'bubble-sort': ['Swap neighbours that are out of order; the biggest moves to the end each pass.', `for (int end = n - 1; end > 0; end--)
+    for (int j = 0; j < end; j++) if (a[j] > a[j + 1]) swap(a, j, j + 1);`],
+ 'insertion-sort': ['Take the next value and slide it left into its place in the sorted part.', `int key = a[i], j = i - 1;
+while (j >= 0 && a[j] > key) { a[j + 1] = a[j]; j--; }
+a[j + 1] = key;`],
+ 'merge-sort': ['Split in half, sort both halves, then merge the two sorted halves.', `mergeSort(a, lo, mid); mergeSort(a, mid + 1, hi);
+while (i <= mid && j <= hi) tmp[k++] = a[i] <= a[j] ? a[i++] : a[j++];`],
+ 'quick-sort': ['Put the pivot in its final place (small left, big right), then sort both sides.', `int p = partition(a, lo, hi);
+quickSort(a, lo, p - 1);
+quickSort(a, p + 1, hi);`],
+ 'heap-sort': ['Build a max-heap, then move the top (max) to the end again and again.', `for (int i = n / 2 - 1; i >= 0; i--) siftDown(a, i, n);
+for (int end = n - 1; end > 0; end--) { swap(a, 0, end); siftDown(a, 0, end); }`],
+ 'counting-sort': ['Count each value, then write the values back in order.', `for (int x : a) cnt[x]++;
+for (int v = 0, k = 0; v <= max; v++) while (cnt[v]-- > 0) a[k++] = v;`],
+ 'comparators': ['Arrays.sort for ascending. For custom order use a comparator with Integer.compare.', `Arrays.sort(a);
+Arrays.sort(iv, (x, y) -> Integer.compare(x[0], y[0]));`]
+});
+
+SS('recursion', {
+ 'parameterised-vs-functional-recursion': ['Pass the answer down as a parameter, or return it back up.', `void f(int i, int sum) { if (i < 1) { print(sum); return; } f(i - 1, sum + i); }
+int g(int n) { return n == 0 ? 0 : n + g(n - 1); }`],
+ 'multiple-calls-and-the-recursion-tree': ['Two calls per step = about 2ⁿ calls. Same calls repeat → use DP.', `int fib(int n) { return n <= 1 ? n : fib(n - 1) + fib(n - 2); }`],
+ 'pick-not-pick': ['At each index: take it, recurse; remove it, recurse again.', `cur.add(a[i]); f(i + 1);
+cur.remove(cur.size() - 1); f(i + 1);`],
+ 'sum-k-print-all-print-one-or-count': ['Same tree. All → void, any one → return boolean, count → return int.', `if (i == n) return sum == k ? 1 : 0;
+return f(i + 1, sum + a[i]) + f(i + 1, sum);`],
+ 'combination-sum-i-reuse-allowed': ['After picking, stay on the same index because it can be used again.', `if (c[i] <= t) { cur.add(c[i]); f(i, t - c[i]); cur.remove(cur.size() - 1); }
+f(i + 1, t);`],
+ 'skip-duplicates': ['Sort first. In the loop, skip a value equal to the one before it.', `for (int i = idx; i < n; i++) {
+    if (i > idx && a[i] == a[i - 1]) continue;
+    cur.add(a[i]); f(i + 1); cur.remove(cur.size() - 1); }`],
+ 'permutations-by-swapping': ['Fix each element at the current position by swapping, recurse, swap back.', `for (int i = idx; i < n; i++) {
+    swap(a, idx, i); f(idx + 1); swap(a, idx, i); }`],
+ 'n-queens-o-1-safety-with-hash-arrays': ['One queen per column. Row and both diagonals must be free (r + c and n − 1 + c − r).', `if (row[r] || d1[r + c] || d2[n - 1 + c - r]) continue;
+place; f(c + 1); remove;`],
+ 'grid-backtracking-mark-explore-4-ways-unmark': ['Mark the cell, try 4 directions, then unmark it.', `char t = g[r][c]; g[r][c] = '#';
+boolean ok = f(r + 1, c) || f(r - 1, c) || f(r, c + 1) || f(r, c - 1);
+g[r][c] = t;`],
+ 'partitioning-try-every-cut': ['Try every end for the first piece; if it is valid, recurse on the rest.', `for (int end = idx; end < n; end++)
+    if (isPal(s, idx, end)) { cur.add(s.substring(idx, end + 1)); f(end + 1); cur.remove(cur.size() - 1); }`],
+ 'fill-in-solvers-try-each-value-undo-on-failure': ['Fill the next empty cell with each allowed value; undo if it leads nowhere.', `for (char d = '1'; d <= '9'; d++)
+    if (valid(b, r, c, d)) { b[r][c] = d; if (solve(b)) return true; b[r][c] = '.'; }
+return false;`]
+});
+
+SS('bits', {
+ 'check-set-clear-toggle-the-i-th-bit': ['Make the mask 1 << i, then & to check, | to set, & ~ to clear, ^ to flip.', `boolean on = (n & (1 << i)) != 0;
+n |= 1 << i;  n &= ~(1 << i);  n ^= 1 << i;`],
+ 'lowest-set-bit-and-power-of-two': ['n & (n − 1) removes the lowest 1 bit; it is 0 only for powers of two.', `boolean pow2 = n > 0 && (n & (n - 1)) == 0;
+int low = n & -n;`],
+ 'count-set-bits-brian-kernighan': ['Remove the lowest 1 bit until n is 0; count the steps.', `while (n != 0) { n &= n - 1; c++; }   // or Integer.bitCount(n)`],
+ 'swap-and-other-one-liners': ['Small tricks: swap with XOR, odd check with & 1, ×2 and ÷2 with shifts.', `a ^= b; b ^= a; a ^= b;
+boolean odd = (a & 1) == 1;`],
+ 'xor-single': ['XOR all numbers: equal pairs cancel, the single one is left.', `int x = 0;
+for (int v : a) x ^= v;`],
+ 'two-single-numbers-split-by-a-differing-bit': ['XOR all = p ^ q. Split numbers by one bit where p and q differ.', `int bit = x & -x;
+for (int v : a) if ((v & bit) != 0) p ^= v; else q ^= v;`],
+ 'count-each-bit-mod-3': ['Count each bit over all numbers; a count not divisible by 3 belongs to the single one.', `for (int b = 0; b < 32; b++) {
+    int cnt = 0; for (int v : a) cnt += (v >> b) & 1;
+    if (cnt % 3 != 0) ans |= 1 << b; }`],
+ 'bitmask-enumeration-of-subsets': ['Each number from 0 to 2ⁿ − 1 is one subset: bit i on = take element i.', `for (int m = 0; m < (1 << n); m++)
+    for (int i = 0; i < n; i++) if ((m & (1 << i)) != 0) take(a[i]);`],
+ 'divide-using-shifts': ['Subtract the biggest divisor × 2^k that fits; add 2^k to the answer.', `while (n >= d) { int k = 0; while (n >= (d << (k + 1))) k++;
+    n -= d << k; q += 1L << k; }`]
+});
+</script>
+
+<script>
+SS('arrays', {
+ 'single-pass-with-trackers': ['Walk once and keep the best values so far (largest, second largest, streak).', `if (x > first) { second = first; first = x; }
+else if (x > second && x != first) second = x;`],
+ 'rotate': ['Rotate right by k: reverse all, reverse first k, reverse the rest.', `k %= n;
+reverse(a, 0, n - 1); reverse(a, 0, k - 1); reverse(a, k, n - 1);`],
+ 'missing-number-with-xor-or-sum': ['XOR all indexes and all values; everything cancels except the missing one.', `int x = n;
+for (int i = 0; i < n; i++) x ^= i ^ a[i];`],
+ 'kadane': ['Keep a running sum. If it goes below 0, start again from 0.', `cur += a[i];
+best = Math.max(best, cur);
+if (cur < 0) cur = 0;`],
+ 'dutch-flag': ['Three pointers: 0 → swap to low, 1 → skip, 2 → swap to high.', `if (a[mid] == 0) swap(a, low++, mid++);
+else if (a[mid] == 1) mid++;
+else swap(a, mid, high--);`],
+ 'moore': ['Keep a candidate and a count; different values cancel each other out.', `if (cnt == 0) cand = x;
+cnt += (x == cand) ? 1 : -1;`],
+ 'next-permutation': ['Find the first dip from the right, swap it with the next bigger value, reverse the tail.', `while (i >= 0 && a[i] >= a[i + 1]) i--;
+if (i >= 0) { while (a[j] <= a[i]) j--; swap(a, i, j); }
+reverse(a, i + 1, n - 1);`],
+ 'running-min-suffix-max': ['Carry the best value seen so far and compare each element with it.', `minSoFar = Math.min(minSoFar, p);
+best = Math.max(best, p - minSoFar);`],
+ 'matrix-moves-rotate-90-spiral-order': ['Rotate = transpose + reverse each row. Spiral = 4 shrinking borders.', `swap m[i][j] with m[j][i] for j > i;
+reverse every row;`],
+ 'use-the-matrix-as-its-own-marker': ['Mark zero rows/columns in row 0 and column 0 instead of extra arrays.', `if (m[i][j] == 0) { m[i][0] = 0; m[0][j] = 0; }
+if (m[i][0] == 0 || m[0][j] == 0) m[i][j] = 0;`],
+ 'merge-intervals': ['Sort by start. If the next starts after the last ends, add it; else extend the end.', `Arrays.sort(iv, (x, y) -> Integer.compare(x[0], y[0]));
+if (last[1] < cur[0]) res.add(cur); else last[1] = Math.max(last[1], cur[1]);`],
+ 'count-inversions': ['During merge sort, when a right item is smaller, all remaining left items are bigger.', `if (a[i] <= a[j]) tmp[k++] = a[i++];
+else { cnt += mid - i + 1; tmp[k++] = a[j++]; }`],
+ 'repeating-and-missing-with-two-equations': ['Use sum and sum of squares to get x − y and x + y, then solve.', `long d = s - n * (n + 1) / 2;            // x - y
+long sum = (s2 - n * (n + 1) * (2 * n + 1) / 6) / d;   // x + y`],
+ 'maximum-product-subarray': ['Check products from the left and from the right; restart after a 0.', `if (pre == 0) pre = 1;  if (suf == 0) suf = 1;
+pre *= a[i];  suf *= a[n - 1 - i];
+best = Math.max(best, Math.max(pre, suf));`],
+ 'pascal-s-triangle-with-ncr': ['Build nCr one term at a time: multiply by (n − i), divide by (i + 1).', `for (int i = 0; i < r; i++) res = res * (n - i) / (i + 1);`]
+});
+
+SS('two-pointers', {
+ 'opposite-ends': ['Sorted array: sum too small → move left up; too big → move right down.', `int s = a[l] + a[r];
+if (s == target) return true;
+if (s < target) l++; else r--;`],
+ 'three-sum': ['Sort. Fix one number, then two pointers on the rest. Skip duplicates.', `for (int i = 0; i < n - 2; i++) {
+    if (i > 0 && a[i] == a[i - 1]) continue;
+    two-pointer search for -a[i] in a[i+1..n-1]; }`],
+ 'read-write': ['Fast pointer reads every item; slow pointer writes only the ones you keep.', `for (int r = 0; r < n; r++)
+    if (keep(a[r])) a[w++] = a[r];`],
+ 'one-pointer-per-array-merge-union-intersection': ['Compare a[i] and b[j]; move the smaller one forward.', `if (a[i] < b[j]) i++;
+else if (a[i] > b[j]) j++;
+else { add(a[i]); i++; j++; }`],
+ 'move-the-limiting-side': ['Area depends on the shorter wall, so always move the shorter one.', `best = Math.max(best, Math.min(h[l], h[r]) * (r - l));
+if (h[l] < h[r]) l++; else r--;`],
+ 'trapping-rain-water': ['Water at a bar = smaller of (max left, max right) − its height.', `if (h[l] < h[r]) { lMax = Math.max(lMax, h[l]); water += lMax - h[l++]; }
+else { rMax = Math.max(rMax, h[r]); water += rMax - h[r--]; }`]
+});
+
+SS('sliding-window', {
+ 'fixed-size-window': ['Window of size k: add the new element, remove the one that left.', `sum += a[r] - a[r - k];
+best = Math.max(best, sum);`],
+ 'longest-window': ['Grow right. While the window breaks the rule, move left. Record the length.', `add(a[r]);
+while (invalid()) remove(a[l++]);
+best = Math.max(best, r - l + 1);`],
+ 'at-most-k-distinct-count-map-in-the-window': ['Count values in a map. If more than K keys, shrink from the left.', `cnt.merge(s.charAt(r), 1, Integer::sum);
+while (cnt.size() > k) { decrease s.charAt(l); l++; }`],
+ 'window-minus-the-majority-k': ['Valid if (window length − most common count) ≤ k.', `maxF = Math.max(maxF, ++f[s.charAt(r) - 'A']);
+while (r - l + 1 - maxF > k) f[s.charAt(l++) - 'A']--;`],
+ 'exactly-k': ['Exactly K = atMost(K) − atMost(K − 1). Each step adds r − l + 1.', `return atMost(a, k) - atMost(a, k - 1);
+res += r - l + 1;   // inside atMost`],
+ 'shortest-window-record-while-valid-then-shrink': ['Grow until valid. While valid, record the size and shrink from the left.', `while (missing == 0) {
+    bestLen = Math.min(bestLen, r - l + 1);
+    remove s.charAt(l++); }`],
+ 'window-maximum-with-a-deque': ['Keep a deque of indexes with decreasing values; the front is the max.', `while (!dq.isEmpty() && a[dq.peekLast()] <= a[i]) dq.pollLast();
+dq.offerLast(i);`]
+});
+
+SS('binary-search', {
+ 'classic-binary-search': ['Check the middle; throw away the half that cannot have the target.', `int mid = lo + (hi - lo) / 2;
+if (a[mid] == t) return mid;
+if (a[mid] < t) lo = mid + 1; else hi = mid - 1;`],
+ 'lower-upper-bound': ['First index with a[i] ≥ x (lower) or > x (upper). If it fits, save it and go left.', `if (a[mid] >= x) { ans = mid; hi = mid - 1; }
+else lo = mid + 1;`],
+ 'rotated-search': ['One half is always sorted. Check if the target is inside that half.', `if (a[lo] <= a[mid]) { if (a[lo] <= t && t < a[mid]) hi = mid - 1; else lo = mid + 1; }
+else { if (a[mid] < t && t <= a[hi]) lo = mid + 1; else hi = mid - 1; }`],
+ 'minimum-of-a-rotated-array': ['Take the smallest of the sorted half, then search the other half.', `if (a[lo] <= a[mid]) { ans = Math.min(ans, a[lo]); lo = mid + 1; }
+else { ans = Math.min(ans, a[mid]); hi = mid - 1; }`],
+ 'single-element-by-index-parity': ['Before the single one, pairs start at even indexes. Make mid even and compare.', `if (mid % 2 == 1) mid--;
+if (a[mid] == a[mid + 1]) lo = mid + 2; else hi = mid;`],
+ 'peak-element-walk-uphill': ['If the right neighbour is bigger, a peak is on the right; else on the left.', `if (a[mid] < a[mid + 1]) lo = mid + 1;
+else hi = mid;`],
+ 'bs-on-answers': ['Binary search the answer value. If it works, save it and try smaller.', `if (possible(mid)) { ans = mid; hi = mid - 1; }
+else lo = mid + 1;`],
+ 'square-root-and-nth-root': ['Find the largest mid with mid × mid ≤ n (use long).', `if ((long) mid * mid <= n) { ans = mid; lo = mid + 1; }
+else hi = mid - 1;`],
+ 'max-min': ['Guess a distance; place greedily. If k items fit, try a bigger distance.', `if (canPlace(stalls, mid, k)) { ans = mid; lo = mid + 1; }
+else hi = mid - 1;`],
+ 'min-max': ['Guess the max part size; count parts greedily. If parts ≤ k, try smaller.', `if (partsNeeded(a, mid) <= k) { ans = mid; hi = mid - 1; }
+else lo = mid + 1;   // lo = max(a), hi = sum(a)`],
+ 'kth-missing-number-bs-on-index': ['Missing numbers before index i = a[i] − (i + 1). Answer = lo + k.', `if (a[mid] - (mid + 1) < k) lo = mid + 1; else hi = mid - 1;
+return lo + k;`],
+ 'median-of-two-sorted-arrays-partition-search': ['Binary search how many items to take from the smaller array for the left half.', `if (l1 <= r2 && l2 <= r1) return median from l1, l2, r1, r2;
+if (l1 > r2) hi = c1 - 1; else lo = c1 + 1;`],
+ 'fully-sorted-matrix-treat-it-as-one-array': ['Treat the matrix as one sorted array: row = mid / C, col = mid % C.', `int v = m[mid / C][mid % C];`],
+ 'staircase-search-from-the-top-right': ['Start top-right. Too big → go left; too small → go down.', `if (m[r][c] == t) return true;
+if (m[r][c] > t) c--; else r++;`],
+ 'binary-search-inside-every-row': ['Run a binary search in each row.', `for (int[] row : m) cnt = m[0].length - firstOne(row);`]
+});
+
+SS('strings', {
+ 'split-reverse-rebuild-with-stringbuilder': ['Split into words, add them back in reverse order.', `String[] w = s.trim().split(" +");
+for (int i = w.length - 1; i >= 0; i--) sb.append(w[i]).append(i > 0 ? " " : "");`],
+ 'depth-counter-for-brackets': ['One bracket type: +1 for "(", −1 for ")". No stack needed.', `if (c == '(') best = Math.max(best, ++d);
+else if (c == ')') d--;`],
+ 'mapping-checks-isomorphic-rotation-anagram': ['Rotation: goal is inside s + s. Anagram: same letter counts.', `boolean rot = s.length() == g.length() && (s + s).contains(g);`],
+ 'longest-common-prefix-sort-and-compare-the-ends': ['Sort the words; compare only the first and the last.', `Arrays.sort(strs);
+while (i < a.length() && i < b.length() && a.charAt(i) == b.charAt(i)) i++;`],
+ 'sort-characters-by-frequency': ['Count letters, sort letters by count, write each one count times.', `chars.sort((x, y) -> f[y] - f[x]);
+for (char c : chars) sb.append(String.valueOf(c).repeat(f[c]));`],
+ 'parse-left-to-right-roman-numerals-atoi': ['Roman: a smaller value before a bigger one is subtracted.', `if (i + 1 < n && val(i) < val(i + 1)) total -= val(i);
+else total += val(i);`],
+ 'expand-center': ['Grow from each center while both ends match; try odd and even centers.', `while (l >= 0 && r < n && s.charAt(l) == s.charAt(r)) { l--; r++; }
+len = r - l - 1;`],
+ 'all-substrings-with-a-running-count': ['Fix the start, extend the end, update counts as you go.', `for (int i = 0; i < n; i++) { int[] f = new int[26];
+    for (int j = i; j < n; j++) f[s.charAt(j) - 'a']++; }`],
+ 'kmp': ['LPS = longest prefix that is also a suffix. On a mismatch jump back using LPS.', `if (p.charAt(i) == p.charAt(len)) lps[i++] = ++len;
+else if (len > 0) len = lps[len - 1];
+else lps[i++] = 0;`],
+ 'z-function': ['z[i] = how long s starting at i matches the start of s.', `if (i < r) z[i] = Math.min(r - i, z[i - l]);
+while (i + z[i] < n && s.charAt(z[i]) == s.charAt(i + z[i])) z[i]++;`],
+ 'rabin-karp-rolling-hash': ['Hash the window as a number. Slide: remove the left char, add the right char.', `ht = (ht - text.charAt(i) * pow % MOD + MOD) % MOD;
+ht = (ht * B + text.charAt(i + m)) % MOD;`]
+});
+
+SS('linked-list', {
+ 'node-traverse-insert-delete': ['Delete = make the previous node skip it. A dummy node handles the head.', `prev.next = prev.next.next;
+ListNode dummy = new ListNode(0, head);`],
+ 'doubly-linked-list-unlink-and-reverse': ['Unlink: fix prev.next and next.prev. Reverse: swap prev and next in every node.', `x.prev.next = x.next;
+x.next.prev = x.prev;`],
+ 'reverse-list': ['Save next, point back, move forward.', `ListNode nxt = cur.next;
+cur.next = prev;
+prev = cur;  cur = nxt;`],
+ 'fast-slow': ['Slow moves 1, fast moves 2. Middle when fast ends; they meet if there is a cycle.', `while (fast != null && fast.next != null) {
+    slow = slow.next;  fast = fast.next.next;
+    if (slow == fast) return true; }`],
+ 'gap-of-n-remove-the-n-th-node-from-the-end': ['Move fast n + 1 steps first, then move both until fast ends.', `for (int i = 0; i <= n; i++) fast = fast.next;
+while (fast != null) { fast = fast.next; slow = slow.next; }
+slow.next = slow.next.next;`],
+ 'palindrome-list-middle-reverse-the-second-half': ['Find the middle, reverse the second half, compare both halves.', `ListNode second = reverse(middle(head));
+compare head and second node by node;`],
+ 'intersection-switch-heads': ['Walk both lists; at the end jump to the other head. They meet at the join.', `p = (p == null) ? b : p.next;
+q = (q == null) ? a : q.next;`],
+ 'digit-lists-with-a-carry': ['Add digit by digit with a carry, like school addition.', `int sum = carry + (l1 != null ? l1.val : 0) + (l2 != null ? l2.val : 0);
+tail.next = new ListNode(sum % 10);  carry = sum / 10;`],
+ 'split-into-chains-then-join': ['Build separate chains (odd/even), then join their ends.', `odd.next = even.next; odd = odd.next;
+even.next = odd.next; even = even.next;`],
+ 'merge-two-sorted-lists-sort-a-list': ['Merge: attach the smaller head each time. Sort: split at the middle, sort, merge.', `if (a.val <= b.val) { t.next = a; a = a.next; } else { t.next = b; b = b.next; }
+return mergeTwo(sortList(left), sortList(right));`],
+ 'reverse-in-groups-of-k': ['Find k nodes; reverse them; connect to the previous group; repeat.', `if (kth == null) break;    // fewer than k left
+reverse the group; groupPrev.next = kth; groupPrev = first;`],
+ 'rotate-make-a-ring-then-cut': ['Join tail to head, walk n − k − 1 steps, cut there.', `tail.next = head;
+for (int i = 0; i < n - k - 1; i++) newTail = newTail.next;
+head = newTail.next; newTail.next = null;`],
+ 'clone-with-random-pointers-by-interleaving': ['Put each copy right after its original, set randoms, then split the lists.', `copy.next = c.next; c.next = copy;
+c.next.random = c.random.next;`]
+});
+</script>
+
+<script>
+SS('stack', {
+ 'stack-basics-and-an-array-implementation': ['An array plus a top index: push writes at ++top, pop reads at top--.', `a[++top] = x;      // push
+return a[top--];   // pop`],
+ 'balanced-brackets': ['Push openers. A closer must match the top. End with an empty stack.', `if (open(c)) st.push(c);
+else if (st.isEmpty() || !matches(st.pop(), c)) return false;
+return st.isEmpty();`],
+ 'infix-postfix-and-evaluating-postfix': ['Letters go out directly. Before pushing an operator, pop the ones with higher or equal priority.', `while (!ops.isEmpty() && prec(ops.peek()) >= prec(c)) out.append(ops.pop());
+ops.push(c);`],
+ 'next-greater': ['Go from the right. Pop smaller values; the top is the next greater.', `while (!st.isEmpty() && st.peek() <= a[i]) st.pop();
+res[i] = st.isEmpty() ? -1 : st.peek();
+st.push(a[i]);`],
+ 'contribution-technique-pse-and-nse': ['a[i] is the minimum of left × right subarrays (distance to previous and next smaller).', `sum += (long) a[i] * left[i] * right[i];`],
+ 'histogram': ['Keep increasing bars. When a lower bar comes, pop and compute the area of the popped bar.', `while (!st.isEmpty() && h[st.peek()] >= cur) {
+    int height = h[st.pop()], left = st.isEmpty() ? -1 : st.peek();
+    best = Math.max(best, height * (i - left - 1)); }`],
+ 'stack-simulation-asteroid-collision': ['A left-moving rock destroys smaller right-moving rocks on top of the stack.', `while (alive && a < 0 && !st.isEmpty() && st.peek() > 0) {
+    if (st.peek() < -a) st.pop();
+    else { if (st.peek() == -a) st.pop(); alive = false; } }`],
+ 'greedy-monotonic-stack-remove-k-digits': ['Keep digits increasing: remove a bigger digit before a smaller one while k > 0.', `while (k > 0 && sb.length() > 0 && sb.charAt(sb.length() - 1) > c) { sb.deleteCharAt(sb.length() - 1); k--; }
+sb.append(c);`],
+ 'previous-greater-with-counts-stock-span': ['Pop all smaller-or-equal prices and add up their spans.', `while (!st.isEmpty() && st.peek()[0] <= price) span += st.pop()[1];
+st.push(new int[]{price, span});`],
+ 'min-stack': ['Store each value with the minimum at that time.', `st.push(new int[]{x, st.isEmpty() ? x : Math.min(x, st.peek()[1])});
+int min = st.peek()[1];`],
+ 'elimination-the-celebrity-problem': ['If a knows b, a is not the celebrity; else b is not. One person remains; verify.', `if (knows[a][b] == 1) a++; else b--;`],
+ 'lru': ['HashMap finds the node; a doubly linked list keeps recent at the front, oldest at the back.', `get: move node to front
+put: if full, remove tail.prev; add new node at front`]
+});
+
+SS('queue', {
+ 'circular-array-queue': ['Array + front + size. Indexes wrap around with % capacity.', `a[(front + size) % cap] = x; size++;          // offer
+int x = a[front]; front = (front + 1) % cap; size--;   // poll`],
+ 'queue-using-two-stacks': ['Push into "in". To pop, pour "in" into "out" only when "out" is empty.', `if (out.isEmpty()) while (!in.isEmpty()) out.push(in.pop());
+return out.pop();`],
+ 'java-queue-deque-api-and-the-level-loop': ['offer / poll / peek. Loop q.size() times to finish one level.', `for (int sz = q.size(); sz > 0; sz--) {
+    int x = q.poll(); /* add neighbours */ }`],
+ 'sliding-window-maximum': ['Deque of indexes with decreasing values. Drop old ones from the front.', `if (dq.peekFirst() <= i - k) dq.pollFirst();
+while (!dq.isEmpty() && a[dq.peekLast()] <= a[i]) dq.pollLast();
+dq.offerLast(i);`],
+ 'queue-of-candidates-in-a-window': ['Queue only the useful indexes (e.g. negatives); drop the ones outside the window.', `if (a[i] < 0) q.offerLast(i);
+if (!q.isEmpty() && q.peekFirst() <= i - k) q.pollFirst();`]
+});
+
+SS('trees', {
+ 'recursive-pre-in-post-order': ['Pre: root first. In: root in the middle. Post: root last.', `out.add(n.val); pre(n.left); pre(n.right);    // preorder
+in(n.left); out.add(n.val); in(n.right);      // inorder`],
+ 'level-order': ['Queue. Take q.size() nodes = one level; add their children.', `for (int sz = q.size(); sz > 0; sz--) {
+    TreeNode n = q.poll(); level.add(n.val);
+    if (n.left != null) q.offer(n.left); if (n.right != null) q.offer(n.right); }`],
+ 'iterative-traversals-with-a-stack': ['Inorder: go left as far as possible, visit, then go right.', `while (cur != null) { st.push(cur); cur = cur.left; }
+cur = st.pop(); out.add(cur.val); cur = cur.right;`],
+ 'height-and-the-1-trick-for-balance': ['Height = 1 + max(left, right). Return −1 as soon as a subtree is unbalanced.', `if (l == -1 || r == -1 || Math.abs(l - r) > 1) return -1;
+return 1 + Math.max(l, r);`],
+ 'diameter': ['Return height to the parent; update the answer with left + right.', `int l = height(n.left), r = height(n.right);
+best = Math.max(best, l + r);
+return 1 + Math.max(l, r);`],
+ 'compare-two-trees-in-lockstep': ['Compare both trees node by node (mirror: left with right).', `if (a == null || b == null) return a == b;
+return a.val == b.val && same(a.left, b.left) && same(a.right, b.right);`],
+ 'tree-views': ['Right view: first node seen at each depth (go right first). Top view: first node per column.', `if (depth == res.size()) res.add(n.val);
+dfs(n.right, depth + 1); dfs(n.left, depth + 1);`],
+ 'lca': ['If p and q are found on different sides, this node is the answer.', `if (root == null || root == p || root == q) return root;
+if (l != null && r != null) return root;
+return l != null ? l : r;`],
+ 'root-to-node-paths-with-backtracking': ['Add the node; search below; remove it if the target is not there.', `path.add(n.val);
+if (n.val == t || find(n.left) || find(n.right)) return true;
+path.remove(path.size() - 1); return false;`],
+ 'maximum-width-with-position-indices': ['Give children numbers 2i + 1 and 2i + 2. Width = last − first + 1.', `idx.offer(2 * id + 1);   // left child
+idx.offer(2 * id + 2);   // right child`],
+ 'parent-map-bfs-treat-the-tree-as-a-graph': ['Save every node’s parent, then BFS in 3 directions (left, right, parent).', `for (TreeNode nb : new TreeNode[]{n.left, n.right, parent.get(n)})
+    if (nb != null && seen.add(nb)) q.offer(nb);`],
+ 'build-tree': ['Next preorder value is the root; its place in inorder splits left and right.', `TreeNode root = new TreeNode(pre[p++]);
+int mid = pos.get(root.val);
+root.left = build(lo, mid - 1); root.right = build(mid + 1, hi);`],
+ 'serialize-and-deserialize-with-null-markers': ['Write preorder with "#" for null; read it back in the same order.', `if (n == null) { sb.append("#,"); return; }
+sb.append(n.val).append(','); ser(n.left); ser(n.right);`],
+ 'morris-traversal-o-1-space': ['Link the left subtree’s rightmost node back to the current node; remove the link later.', `if (pred.right == null) { pred.right = cur; cur = cur.left; }
+else { pred.right = null; out.add(cur.val); cur = cur.right; }`],
+ 'flatten-into-a-right-pointing-list': ['Attach the right subtree under the left subtree’s rightmost node; move left to right.', `pred.right = cur.right;
+cur.right = cur.left;  cur.left = null;`],
+ 'complete-tree-count-nodes-in-o-log-n': ['If left height = right height, the tree is full: 2^h − 1 nodes.', `if (lh == rh) return (1 << lh) - 1;
+return 1 + count(root.left) + count(root.right);`]
+});
+
+SS('bst', {
+ 'search-and-insert': ['Smaller → go left, bigger → go right.', `while (root != null && root.val != x) root = x < root.val ? root.left : root.right;`],
+ 'floor-and-ceil': ['Floor: a node ≤ x is a candidate; save it and go right for a bigger one.', `if (root.val <= x) { ans = root.val; root = root.right; }
+else root = root.left;`],
+ 'delete-a-node': ['No child or one child: return the other child. Two children: copy the next bigger value, delete it.', `if (root.left == null) return root.right;
+if (root.right == null) return root.left;
+root.val = minOf(root.right); root.right = delete(root.right, root.val);`],
+ 'validate-bst': ['Each node must stay inside a (low, high) range.', `if (n.val <= lo || n.val >= hi) return false;
+return valid(n.left, lo, n.val) && valid(n.right, n.val, hi);`],
+ 'kth-smallest-via-inorder': ['Inorder gives sorted order: stop at the k-th node.', `inorder(n.left);
+if (--count == 0) result = n.val;
+inorder(n.right);`],
+ 'lca-successor-and-predecessor': ['Both smaller → go left; both bigger → go right; otherwise here.', `if (p.val < root.val && q.val < root.val) root = root.left;
+else if (p.val > root.val && q.val > root.val) root = root.right;
+else return root;`],
+ 'build-a-bst-from-preorder-with-an-upper-bound': ['Take values while they are under the bound; left uses the node value as bound.', `if (i == pre.length || pre[i] > bound) return null;
+root = new TreeNode(pre[i++]); root.left = build(root.val); root.right = build(bound);`],
+ 'bst-iterator-and-two-sum-with-two-iterators': ['Keep the left path on a stack; the top is the next smallest.', `TreeNode n = st.pop();
+pushLeft(n.right);
+return n.val;`],
+ 'recover-two-swapped-nodes': ['Inorder should go up. The wrong nodes are at the dips; swap their values.', `if (prev != null && prev.val > n.val) {
+    if (first == null) first = prev;
+    second = n; }`],
+ 'largest-bst-inside-a-binary-tree': ['Each subtree returns {min, max, size}. Valid if left.max < val < right.min.', `if (l.max < n.val && n.val < r.min) return {min, max, l.size + r.size + 1};
+return {-INF, INF, max(l.size, r.size)};`]
+});
+
+SS('heaps', {
+ 'heap-as-an-array-sift-up-sift-down': ['Children of i are 2i + 1 and 2i + 2. Swap up after push, swap down after pop.', `while (i > 0 && a[(i - 1) / 2] > a[i]) { swap(i, (i - 1) / 2); i = (i - 1) / 2; }`],
+ 'java-priorityqueue-cheat-sheet': ['Min-heap by default; reverseOrder() for a max-heap.', `PriorityQueue<Integer> min = new PriorityQueue<>();
+PriorityQueue<Integer> max = new PriorityQueue<>(Collections.reverseOrder());`],
+ 'top-k': ['Keep a min-heap of size k; its top is the k-th largest.', `pq.offer(x);
+if (pq.size() > k) pq.poll();
+return pq.peek();`],
+ 'k-way-merge-heap-of-heads': ['Put each list’s head in a heap; take the smallest; add its next.', `ListNode n = pq.poll(); t.next = n; t = n;
+if (n.next != null) pq.offer(n.next);`],
+ 'two-heaps': ['Max-heap holds the small half, min-heap the big half. Median is at the tops.', `lo.offer(x); hi.offer(lo.poll());
+if (hi.size() > lo.size()) lo.offer(hi.poll());`],
+ 'greedy-with-a-heap': ['Always join or pick the current best (e.g. the two smallest ropes).', `long a = pq.poll(), b = pq.poll();
+cost += a + b;  pq.offer(a + b);`]
+});
+
+SS('tries', {
+ 'trie-basic': ['Each node has 26 children. Walk letter by letter; mark the end of a word.', `if (cur.next[c - 'a'] == null) cur.next[c - 'a'] = new Node();
+cur = cur.next[c - 'a'];
+cur.end = true;   // after the last letter`],
+ 'prefix-counters-count-and-erase': ['Each node counts words passing through (pass) and ending there (end).', `cur = cur.next[c - 'a']; cur.pass++;   // on insert
+cur.end++;                              // at the last letter`],
+ 'every-prefix-must-be-a-word': ['A word is good if every node on its path has end = true.', `for (char c : w.toCharArray()) { cur = cur.next[c - 'a']; if (!cur.end) ok = false; }`],
+ 'insert-every-suffix-distinct-substrings': ['Insert every suffix; each new node is a new distinct substring.', `for (int i = 0; i < n; i++) for (int j = i; j < n; j++)
+    if (cur.next[c] == null) { cur.next[c] = new Node(); count++; }`],
+ 'max-xor': ['Store numbers bit by bit; take the opposite bit whenever possible.', `if (cur.next[1 - bit] != null) { val |= 1 << b; cur = cur.next[1 - bit]; }
+else cur = cur.next[bit];`]
+});
+
+SS('graphs', {
+ 'bfs-dfs': ['BFS: queue, visits by distance. DFS: recursion, goes deep first.', `q.offer(src); vis[src] = true;
+while (!q.isEmpty()) { int u = q.poll();
+    for (int v : adj.get(u)) if (!vis[v]) { vis[v] = true; q.offer(v); } }`],
+ 'count-components-a-new-start-a-new-group': ['Each unvisited node starts a new group; DFS marks the whole group.', `for (int i = 0; i < n; i++)
+    if (!vis[i]) { count++; dfs(i); }`],
+ 'grid-dfs': ['Each land cell starts a DFS that sinks the whole island.', `if (g[r][c] == '1') { count++; sink(r, c); }
+// sink: mark '0', then call sink on 4 neighbours`],
+ 'multi-source-bfs': ['Put ALL starting cells in the queue first; each BFS level = 1 minute.', `for each rotten cell: q.offer(cell);
+while (!q.isEmpty() && fresh > 0) { process one level; minutes++; }`],
+ 'start-from-the-border': ['Mark everything reachable from the border first; the rest is enclosed.', `for each border cell 'O': dfs and mark '#';
+then '#' → 'O', other 'O' → 'X';`],
+ 'cycle-detection-undirected-vs-directed': ['Undirected: a visited neighbour that is not the parent. Directed: an edge back into the current path.', `else if (v != parent) return true;     // undirected
+if (state[v] == 1) return true;        // directed: v is on the path`],
+ 'bipartite-check-by-2-colouring': ['Colour neighbours with the opposite colour; same colour on both ends → not bipartite.', `if (color[v] == -1) { color[v] = 1 - color[u]; q.offer(v); }
+else if (color[v] == color[u]) return false;`],
+ 'topo-sort': ['Start with nodes that have no incoming edges; removing a node frees its neighbours.', `for (int v : adj.get(u)) if (--indeg[v] == 0) q.offer(v);
+// fewer than n nodes in the order → cycle`],
+ 'topological-sort-by-dfs-finish-order': ['Push a node on a stack after all its children are done.', `for (int v : adj.get(u)) if (!vis[v]) dfs(v);
+st.push(u);`],
+ 'bfs-distances-for-unit-weights': ['All edges cost 1, so BFS gives the shortest path.', `if (dist[v] == -1) { dist[v] = dist[u] + 1; q.offer(v); }`],
+ 'dijkstra': ['Always take the closest node next (priority queue) and relax its edges.', `if (d > dist[u]) continue;
+if (d + w < dist[v]) { dist[v] = d + w; pq.offer(new int[]{dist[v], v}); }`],
+ 'negative-weights-and-all-pairs': ['Bellman-Ford: relax all edges n − 1 times. Floyd: try every node k as a middle stop.', `if (dist[u] + w < dist[v]) dist[v] = dist[u] + w;          // Bellman-Ford
+d[i][j] = Math.min(d[i][j], d[i][k] + d[k][j]);           // Floyd`],
+ 'dsu': ['find walks up to the group leader; union joins two leaders (small under big).', `int find(int x) { return p[x] == x ? x : (p[x] = find(p[x])); }
+if (ra != rb) p[rb] = ra;   // union`],
+ 'kruskal-s-mst': ['Sort edges by weight; take an edge if it joins two different groups.', `Arrays.sort(edges, (a, b) -> Integer.compare(a[2], b[2]));
+if (find(u) != find(v)) { union(u, v); total += w; }`],
+ 'prim-s-mst': ['Grow the tree from node 0, always adding the cheapest edge to a new node.', `if (inMst[u]) continue;
+inMst[u] = true; total += w;
+for (int[] e : adj.get(u)) pq.offer(new int[]{e[1], e[0]});`],
+ 'counting-with-dsu-spare-edges-and-components': ['Each successful union = one group less. Groups − 1 = edges still needed.', `if (find(a) != find(b)) { union(a, b); components--; }
+return components - 1;`],
+ 'bridges-and-articulation-points-tarjan': ['Edge u–v is a bridge if v cannot reach u or above without it: low[v] > tin[u].', `low[u] = Math.min(low[u], low[v]);
+if (low[v] > tin[u]) bridges.add(List.of(u, v));`],
+ 'strongly-connected-components-kosaraju': ['DFS for finish order, reverse the edges, DFS again in that order.', `1. dfs → push nodes on a stack when done
+2. reverse all edges
+3. pop nodes; each new dfs = one SCC`]
+});
+
+SS('greedy', {
+ 'sort-both-match-greedily': ['Sort both lists; give the smallest thing that is enough.', `Arrays.sort(g); Arrays.sort(s);
+if (s[c] >= g[child]) child++;`],
+ 'best-ratio-first-fractional-knapsack': ['Take items with the best value per weight first; split the last one.', `sort by val/wt descending;
+take = Math.min(cap, wt[i]); total += val[i] * take / wt[i];`],
+ 'simulate-with-counts': ['Keep counts of each bill; give the bigger bill as change first.', `if (ten > 0 && five > 0) { ten--; five--; }
+else if (five >= 3) five -= 3; else return false;`],
+ 'range-of-possibilities-valid-parenthesis-string': ['Track the smallest and largest possible open count.', `lo += (c == '(') ? 1 : -1;  hi += (c == ')') ? -1 : 1;
+if (hi < 0) return false;  lo = Math.max(lo, 0);`],
+ 'activity-selection': ['Sort by end time; take a meeting if it starts after the last one ended.', `sort by end;
+if (start[i] > lastEnd) { count++; lastEnd = end[i]; }`],
+ 'two-sorted-timelines-minimum-platforms': ['Sort arrivals and departures; arrival before next departure needs one more platform.', `if (arr[i] <= dep[j]) { cur++; i++; best = Math.max(best, cur); }
+else { cur--; j++; }`],
+ 'latest-free-slot-job-sequencing': ['Most profit first; place each job in the latest free day before its deadline.', `for (int t = deadline[i]; t >= 1; t--)
+    if (!used[t]) { used[t] = true; profit += p[i]; break; }`],
+ 'jump-game': ['Track the farthest index you can reach.', `if (i > far) return false;
+far = Math.max(far, i + a[i]);`],
+ 'two-passes-for-two-sided-rules-candy': ['Left pass for the left neighbour, right pass for the right neighbour.', `if (r[i] > r[i - 1]) c[i] = c[i - 1] + 1;              // left to right
+if (r[i] > r[i + 1]) c[i] = Math.max(c[i], c[i + 1] + 1); // right to left`],
+ 'insert-into-sorted-intervals': ['Copy intervals before it, merge the overlapping ones, copy the rest.', `while (i < n && iv[i][1] < s) res.add(iv[i++]);
+while (i < n && iv[i][0] <= e) { s = min(s, iv[i][0]); e = max(e, iv[i][1]); i++; }`]
+});
+
+SS('dp', {
+ 'dp-4-steps': ['Write the recursion, then save results (memo), then fill a table, then keep only what you need.', `dp[i] = dp[i - 1] + dp[i - 2];
+// space: cur = prev + prev2; prev2 = prev; prev = cur;`],
+ 'min-cost-with-jumps-frog-jump': ['Cost at i = best of the last k positions + jump cost.', `for (int j = 1; j <= k && i - j >= 0; j++)
+    dp[i] = Math.min(dp[i], dp[i - j] + Math.abs(h[i] - h[i - j]));`],
+ 'house-robber': ['Rob this house (+ dp two back) or skip it (dp one back).', `int cur = Math.max(prev, prev2 + x);
+prev2 = prev; prev = cur;`],
+ 'grid-paths-unique-paths-min-path-sum': ['Each cell comes from the top or the left.', `dp[i][j] = dp[i - 1][j] + dp[i][j - 1];                    // count paths
+dp[i][j] = g[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1]);  // min cost`],
+ 'state-with-a-last-choice-ninja-s-training': ['Remember what you did yesterday so you do not repeat it.', `for (int t = 0; t < 3; t++)
+    if (t != last) cur[last] = Math.max(cur[last], pts[day][t] + prev[t]);`],
+ 'subset-sum': ['dp[t] = can we make sum t? Loop t from high to low so each item is used once.', `for (int x : a) for (int t = k; t >= x; t--)
+    dp[t] = dp[t] || dp[t - x];`],
+ 'count-subsets-with-sum-k': ['Same as subset sum, but add counts.', `for (int x : a) for (int t = k; t >= x; t--)
+    dp[t] += dp[t - x];`],
+ 'knapsack': ['dp[w] = best value with capacity w. 0/1: loop w down. Unbounded: loop w up.', `for (int w = W; w >= wt[i]; w--)          // 0/1
+    dp[w] = Math.max(dp[w], val[i] + dp[w - wt[i]]);`],
+ 'coin-change-minimum-coins-and-number-of-ways': ['Coins can repeat, so loop the amount upwards.', `dp[a] = Math.min(dp[a], dp[a - c] + 1);   // fewest coins
+ways[a] += ways[a - c];                    // number of ways`],
+ 'lcs': ['Same letters → 1 + diagonal. Different → best of top and left.', `dp[i][j] = a.charAt(i - 1) == b.charAt(j - 1)
+         ? 1 + dp[i - 1][j - 1] : Math.max(dp[i - 1][j], dp[i][j - 1]);`],
+ 'longest-common-substring': ['Like LCS, but a mismatch resets to 0. Answer = the biggest cell.', `if (a.charAt(i - 1) == b.charAt(j - 1)) dp[i][j] = 1 + dp[i - 1][j - 1];
+best = Math.max(best, dp[i][j]);`],
+ 'edit-distance': ['Same letter → free. Else 1 + min(insert, delete, replace).', `dp[i][j] = same ? dp[i - 1][j - 1]
+         : 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1]));`],
+ 'stocks': ['Two states each day: holding a stock or not. Buy, sell or do nothing.', `free = Math.max(free, hold + price);   // sell
+hold = Math.max(hold, free - price);   // buy`],
+ 'lis': ['tails[k] = smallest end of an increasing run of length k + 1. Binary search where x goes.', `int pos = lowerBound(tails, len, x);
+tails[pos] = x;  if (pos == len) len++;`],
+ 'mcm': ['For range i..j try every split k and keep the cheapest.', `for (int k = i; k < j; k++)
+    dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k + 1][j] + p[i - 1] * p[k] * p[j]);`],
+ 'front-partition-cut-a-prefix-recurse-on-the-rest': ['Cut a valid first piece, add the best answer for the rest.', `for (int j = i; j < n; j++)
+    if (pal[i][j]) dp[i] = Math.min(dp[i], 1 + dp[j + 1]);`],
+ 'squares-and-rectangles-of-1s': ['Square ending here = 1 + min(top, left, top-left).', `dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1]));
+total += dp[i][j];`]
+});
+</script>
+
+<script>
+/* "Which pattern?" flowchart per topic: [question, card id in this topic, answer label] … then the fallback. */
+window.FLOWS = {
+ maths: { steps:[
+  ['Do you need the digits of a number?', 'digit-extraction', 'Digit extraction'],
+  ['Divisors of one number, or is it prime?', 'divisors-up-to-n', 'Loop up to √n'],
+  ['Many primes up to N?', 'sieve-of-eratosthenes', 'Sieve'],
+  ['Break a number into prime factors?', 'prime-factorization-trial-division-spf', 'Prime factorization'],
+  ['GCD or LCM?', 'gcd-hcf-by-euclid', 'Euclid'],
+  ['Big power, or "answer modulo 1e9+7"?', 'fast-power-and-modular-arithmetic', 'Fast power']], end:'Write the formula, then check overflow.' },
+ hashing: { steps:[
+  ['Count how often things appear?', 'frequency-counting', 'Frequency count'],
+  ['Find a pair with a target sum (unsorted)?', 'two-sum', 'Two Sum with a map'],
+  ['Count subarrays with sum K (negatives allowed)?', 'prefix-sum-map', 'Prefix sum + map'],
+  ['Longest subarray with sum K?', 'longest-subarray-with-sum-k-keep-the-first-index', 'First index map'],
+  ['Subarrays with XOR K?', 'count-subarrays-with-xor-k', 'Prefix XOR + map'],
+  ['Longest run of consecutive numbers?', 'longest-consecutive', 'HashSet'],
+  ['Group items that look the same?', 'group-by-a-signature-key', 'Signature key']], end:'Store what you have seen so far in a HashMap / HashSet.' },
+ sorting: { steps:[
+  ['Need it stable or for a linked list?', 'merge-sort', 'Merge sort'],
+  ['Fast in-place, or the k-th smallest?', 'quick-sort', 'Quick sort / quickselect'],
+  ['Small range of numbers (0..k)?', 'counting-sort', 'Counting sort'],
+  ['Almost sorted already?', 'insertion-sort', 'Insertion sort'],
+  ['Custom order (by second value, by length)?', 'comparators', 'Comparator']], end:'In real code just use Arrays.sort / Collections.sort.' },
+ recursion: { steps:[
+  ['All subsets / subsequences?', 'pick-not-pick', 'Pick / not pick'],
+  ['Subsets with a sum: all, any one, or how many?', 'sum-k-print-all-print-one-or-count', 'Sum = K tree'],
+  ['Same item can be used many times?', 'combination-sum-i-reuse-allowed', 'Stay on the same index'],
+  ['Input has duplicates but answers must be unique?', 'skip-duplicates', 'Sort + skip equal'],
+  ['All orderings?', 'permutations-by-swapping', 'Permutations'],
+  ['Path or word in a grid?', 'grid-backtracking-mark-explore-4-ways-unmark', 'Grid backtracking'],
+  ['Cut a string into valid pieces?', 'partitioning-try-every-cut', 'Partitioning'],
+  ['Place items under rules (queens, sudoku)?', 'n-queens-o-1-safety-with-hash-arrays', 'Placement backtracking']], end:'If the same calls repeat, add memo → it becomes DP.' },
+ bits: { steps:[
+  ['Every number twice except one?', 'xor-single', 'XOR everything'],
+  ['Two numbers appear once?', 'two-single-numbers-split-by-a-differing-bit', 'Split by a bit'],
+  ['Every number three times except one?', 'count-each-bit-mod-3', 'Count bits mod 3'],
+  ['Check / set / clear one bit?', 'check-set-clear-toggle-the-i-th-bit', 'Masks'],
+  ['Count 1 bits or power of two?', 'count-set-bits-brian-kernighan', 'n & (n − 1)'],
+  ['All subsets and n ≤ 20?', 'bitmask-enumeration-of-subsets', 'Bitmask loop']], end:'Write the numbers in binary and look for a pattern.' },
+ arrays: { steps:[
+  ['Max sum of a contiguous part?', 'kadane', 'Kadane'],
+  ['Only 0s, 1s and 2s to sort?', 'dutch-flag', 'Dutch flag'],
+  ['An element appears more than n/2 (or n/3) times?', 'moore', 'Moore voting'],
+  ['Rotate by k in place?', 'rotate', 'Three reversals'],
+  ['Next arrangement in order?', 'next-permutation', 'Next permutation'],
+  ['Overlapping intervals?', 'merge-intervals', 'Sort + merge'],
+  ['Count pairs i < j with a[i] > a[j]?', 'count-inversions', 'Merge sort count'],
+  ['Matrix rotate or spiral?', 'matrix-moves-rotate-90-spiral-order', 'Matrix moves']], end:'Try one pass that remembers the best so far.' },
+ 'two-pointers': { steps:[
+  ['Sorted array, pair with a target sum?', 'opposite-ends', 'Opposite ends'],
+  ['Triplets / quadruplets with a sum?', 'three-sum', 'Sort + fix + squeeze'],
+  ['Remove or move items in place?', 'read-write', 'Read + write pointer'],
+  ['Two sorted arrays to combine?', 'one-pointer-per-array-merge-union-intersection', 'One pointer each'],
+  ['Most water between two lines?', 'move-the-limiting-side', 'Move the shorter side'],
+  ['Water trapped between bars?', 'trapping-rain-water', 'Left max / right max']], end:'Not sorted and need pairs? Use a HashMap instead.' },
+ 'sliding-window': { steps:[
+  ['Window of a FIXED size k?', 'fixed-size-window', 'Fixed window'],
+  ['LONGEST part that follows a rule?', 'longest-window', 'Shrink while invalid'],
+  ['At most K different values?', 'at-most-k-distinct-count-map-in-the-window', 'Count map'],
+  ['COUNT parts with EXACTLY K?', 'exactly-k', 'atMost(K) − atMost(K−1)'],
+  ['SHORTEST part that contains everything?', 'shortest-window-record-while-valid-then-shrink', 'Shrink while valid'],
+  ['Max of every window?', 'window-maximum-with-a-deque', 'Monotonic deque']], end:'Negative numbers in a sum problem? Use prefix sum + map.' },
+ 'binary-search': { steps:[
+  ['Find a value in a sorted array?', 'classic-binary-search', 'Classic'],
+  ['First / last position, count, floor, ceil?', 'lower-upper-bound', 'Lower / upper bound'],
+  ['Sorted but rotated?', 'rotated-search', 'Find the sorted half'],
+  ['Find the minimum / smallest value that works?', 'bs-on-answers', 'Binary search on answer'],
+  ['Maximize the minimum distance?', 'max-min', 'Aggressive cows'],
+  ['Minimize the largest part?', 'min-max', 'Book allocation'],
+  ['Median of two sorted arrays?', 'median-of-two-sorted-arrays-partition-search', 'Partition search'],
+  ['Sorted matrix?', 'staircase-search-from-the-top-right', 'Staircase / flatten']], end:'Look for a yes/no question that flips once: F F F T T T.' },
+ strings: { steps:[
+  ['Reverse words or rebuild text?', 'split-reverse-rebuild-with-stringbuilder', 'Split + StringBuilder'],
+  ['Brackets of one type?', 'depth-counter-for-brackets', 'Depth counter'],
+  ['Anagram, rotation, isomorphic?', 'mapping-checks-isomorphic-rotation-anagram', 'Counts / mapping'],
+  ['Longest palindrome inside?', 'expand-center', 'Expand around center'],
+  ['Find a pattern in a text fast?', 'kmp', 'KMP'],
+  ['Compare many substrings?', 'rabin-karp-rolling-hash', 'Rolling hash']], end:'Many string problems are really hashing or sliding window.' },
+ 'linked-list': { steps:[
+  ['Reverse the list or a part?', 'reverse-list', 'Reverse'],
+  ['Middle node or a cycle?', 'fast-slow', 'Fast and slow'],
+  ['N-th node from the end?', 'gap-of-n-remove-the-n-th-node-from-the-end', 'Gap of n'],
+  ['Is it a palindrome?', 'palindrome-list-middle-reverse-the-second-half', 'Middle + reverse'],
+  ['Two lists join somewhere?', 'intersection-switch-heads', 'Switch heads'],
+  ['Merge or sort lists?', 'merge-two-sorted-lists-sort-a-list', 'Merge / merge sort'],
+  ['Reverse every k nodes?', 'reverse-in-groups-of-k', 'k-group reverse']], end:'Draw the boxes and use a dummy node when the head can change.' },
+ stack: { steps:[
+  ['Brackets must match?', 'balanced-brackets', 'Balanced brackets'],
+  ['Next / previous greater or smaller?', 'next-greater', 'Monotonic stack'],
+  ['Biggest rectangle of bars?', 'histogram', 'Histogram'],
+  ['Sum over all subarrays of min / max?', 'contribution-technique-pse-and-nse', 'Contribution'],
+  ['Smallest number after removing digits?', 'greedy-monotonic-stack-remove-k-digits', 'Increasing stack'],
+  ['Expression conversion / evaluation?', 'infix-postfix-and-evaluating-postfix', 'Operator stack'],
+  ['Design: min in O(1), LRU cache?', 'min-stack', 'Min stack / LRU']], end:'Newest item matters first → stack.' },
+ queue: { steps:[
+  ['Max / min of every window?', 'sliding-window-maximum', 'Monotonic deque'],
+  ['Process level by level?', 'java-queue-deque-api-and-the-level-loop', 'Level loop'],
+  ['Build a queue from stacks?', 'queue-using-two-stacks', 'Two stacks'],
+  ['Fixed-size queue in an array?', 'circular-array-queue', 'Circular array']], end:'Oldest item first → queue.' },
+ trees: { steps:[
+  ['Visit all nodes in an order?', 'recursive-pre-in-post-order', 'Pre / in / post'],
+  ['Level by level, or a view of the tree?', 'level-order', 'BFS level loop'],
+  ['Height, balanced, diameter, path sum?', 'diameter', 'DFS returns height'],
+  ['Common ancestor of two nodes?', 'lca', 'LCA'],
+  ['Nodes at distance K, burn the tree?', 'parent-map-bfs-treat-the-tree-as-a-graph', 'Parent map + BFS'],
+  ['Build a tree from two traversals?', 'build-tree', 'Preorder + inorder'],
+  ['O(1) extra space traversal?', 'morris-traversal-o-1-space', 'Morris']], end:'Ask: what should each subtree return to its parent?' },
+ bst: { steps:[
+  ['Find, insert, floor or ceil?', 'search-and-insert', 'Walk one path'],
+  ['Is it a valid BST?', 'validate-bst', 'Range check'],
+  ['K-th smallest / sorted order?', 'kth-smallest-via-inorder', 'Inorder'],
+  ['Common ancestor in a BST?', 'lca-successor-and-predecessor', 'Split point'],
+  ['Two nodes were swapped?', 'recover-two-swapped-nodes', 'Inorder dips'],
+  ['Delete a node?', 'delete-a-node', 'Successor copy']], end:'Smaller → left, bigger → right.' },
+ heaps: { steps:[
+  ['K-th largest / top K?', 'top-k', 'Heap of size k'],
+  ['Merge K sorted lists?', 'k-way-merge-heap-of-heads', 'Heap of heads'],
+  ['Median of a stream?', 'two-heaps', 'Two heaps'],
+  ['Always combine / pick the current best?', 'greedy-with-a-heap', 'Greedy + heap']], end:'Need the smallest or largest again and again → heap.' },
+ tries: { steps:[
+  ['Words with prefix search?', 'trie-basic', 'Trie'],
+  ['Count words with a prefix, erase?', 'prefix-counters-count-and-erase', 'Prefix counters'],
+  ['Distinct substrings?', 'insert-every-suffix-distinct-substrings', 'Insert suffixes'],
+  ['Maximum XOR of two numbers?', 'max-xor', 'Bit trie']], end:'Many words sharing prefixes → trie.' },
+ graphs: { steps:[
+  ['Grid of cells, count islands / fill?', 'grid-dfs', 'Grid DFS'],
+  ['Spread from many starts / minimum time?', 'multi-source-bfs', 'Multi-source BFS'],
+  ['Shortest path, every edge costs 1?', 'bfs-distances-for-unit-weights', 'BFS'],
+  ['Shortest path with weights (no negatives)?', 'dijkstra', 'Dijkstra'],
+  ['Negative weights or all pairs?', 'negative-weights-and-all-pairs', 'Bellman-Ford / Floyd'],
+  ['Order with prerequisites?', 'topo-sort', 'Topological sort'],
+  ['Groups joining, "are they connected?"', 'dsu', 'DSU'],
+  ['Connect all nodes cheaply?', 'kruskal-s-mst', 'MST'],
+  ['Any cycle?', 'cycle-detection-undirected-vs-directed', 'Cycle check'],
+  ['Split into two sides?', 'bipartite-check-by-2-colouring', 'Bipartite']], end:'Draw nodes and edges, then BFS or DFS.' },
+ greedy: { steps:[
+  ['Most non-overlapping meetings?', 'activity-selection', 'Sort by end'],
+  ['Rooms / platforms needed at once?', 'two-sorted-timelines-minimum-platforms', 'Two timelines'],
+  ['Can you reach the end / fewest jumps?', 'jump-game', 'Farthest reach'],
+  ['Rules from both neighbours?', 'two-passes-for-two-sided-rules-candy', 'Two passes'],
+  ['Jobs with deadlines and profits?', 'latest-free-slot-job-sequencing', 'Latest free slot'],
+  ['Items can be split?', 'best-ratio-first-fractional-knapsack', 'Best ratio']], end:'Cannot prove greedy is right? Try a small counter-example, then use DP.' },
+ dp: { steps:[
+  ['Steps or jumps on a line?', 'dp-4-steps', '1D DP'],
+  ['Take or skip, no two neighbours?', 'house-robber', 'House robber'],
+  ['Moving in a grid?', 'grid-paths-unique-paths-min-path-sum', 'Grid DP'],
+  ['Subset with a target sum?', 'subset-sum', 'Subset sum'],
+  ['Weights and values with a limit?', 'knapsack', 'Knapsack'],
+  ['Coins / ways to make an amount?', 'coin-change-minimum-coins-and-number-of-ways', 'Coin change'],
+  ['Two strings?', 'lcs', 'LCS / edit distance'],
+  ['Buy and sell stock?', 'stocks', 'Stock states'],
+  ['Longest increasing sequence?', 'lis', 'LIS'],
+  ['Best way to split a range?', 'mcm', 'Partition DP']], end:'Write the recursion first, then add memo.' }
+};
+</script>
+
+<script>
 (function(){
 const FAMS = ['Start','Foundations','Arrays & Strings','Linear structures','Trees','Graphs','Paradigms'];
 const $ = s => document.querySelector(s);
@@ -5189,7 +5946,7 @@ const strip = s => String(s||'').replace(/<[^>]+>/g,' ').replace(/&lt;/g,'<').re
 T.forEach(t => { let n = 0; (t.secs||[]).forEach(s => s.ps.forEach(p => { n++; p.n = n; p.id = t.id + '--' + (p.id || slug(p.t)); p.sec = s.h; })); t.count = n; });
 T.sort((a,b) => (FAMS.indexOf(a.fam) - FAMS.indexOf(b.fam)) || ((a.o||0) - (b.o||0)));
 
-let codeOpen = !!store.get('codeOpen', false), cur = null, booted = false;
+let codeOpen = !!store.get('codeOpen', false), cur = null, booted = false, view = store.get('view', 'short') === 'long' ? 'long' : 'short';
 
 /* ---- rail ---- */
 const rail = $('#rail');
@@ -5203,22 +5960,68 @@ rail.addEventListener('click', e => { const b = e.target.closest('.tab'); if (b)
 function card(p){
   const code = p.c ? dedent(p.c) : '';
   const d = p.d ? (/^\s*</.test(p.d) ? p.d : `<p>${p.d}</p>`) : '';
+  const rows = [];
+  if (p.k) rows.push(['Use it when', `<mark>${p.k}</mark>`, '']);
+  if (d) rows.push(['How it works', d, '']);
+  if (p.tc || p.sc) rows.push(['Time · Space', `<span class="cxi"><code>${esc(p.tc||'—')}</code><span>time</span><code>${esc(p.sc||'—')}</code><span>space</span></span>`, '']);
+  if (p.w) rows.push(['Watch out', p.w, 'w']);
+  if (p.p && p.p.length) rows.push(['Practice', `<div class="probs">${p.p.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`, '']);
   return `<article class="card" id="${p.id}">
-  <div class="ch"><h3><span class="n">${String(p.n).padStart(2,'0')}</span>${p.t}</h3><div class="cx">${p.tc?`<span><i>Time</i>${esc(p.tc)}</span>`:''}${p.sc?`<span><i>Space</i>${esc(p.sc)}</span>`:''}</div></div>
-  ${p.k?`<p class="spot"><b>Spot it</b><mark>${p.k}</mark></p>`:''}
-  ${d?`<div class="idea">${d}</div>`:''}
+  <div class="ch"><h3><span class="n">${String(p.n).padStart(2,'0')}</span>${p.t}</h3></div>
+  <table class="ct"><tbody>${rows.map(r => `<tr class="${r[2]}"><th scope="row">${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</tbody></table>
   ${p.v||''}
   ${code?`<details class="code"${codeOpen?' open':''}><summary><span class="lang">Java</span><span class="ln">${code.split('\n').length} lines</span><button class="copy" type="button">Copy</button></summary><pre><code>${hl(code)}</code></pre></details>`:''}
-  ${p.w?`<p class="warn"><b>Watch out:</b> ${p.w}</p>`:''}
-  ${p.p&&p.p.length?`<div class="probs"><b>Practice</b>${p.p.map(x=>`<span>${esc(x)}</span>`).join('')}</div>`:''}
 </article>`;
 }
+/* reference tables: last column is Java code (escaped + highlighted), the others are HTML */
+function ftable(t, tb){
+  const cols = tb.cols || ['Function', 'What it does', 'Example'];
+  return `<section class="sec" id="${t.id}--${tb.id}"><h2>${esc(tb.h)}</h2>${tb.d?`<p class="sd">${tb.d}</p>`:''}
+  <div class="ftw"><table class="ft ${tb.cls||''}"><thead><tr>${cols.map(c=>`<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>
+  ${tb.rows.map(r => `<tr>${r.map((cell, i) => i === r.length - 1 && tb.code !== false ? `<td class="fc" data-l="${esc(cols[i])}">${cell ? `<pre class="jc">${hl(dedent(cell).replace(/ {2,}(?=\/\/)/g, "  "))}</pre>` : ''}</td>` : `<td data-l="${esc(cols[i])}"${i===0?' class="fn"':''}>${cell}</td>`).join('')}</tr>`).join('')}
+  </tbody></table></div></section>`;
+}
+/* "which pattern?" flowchart */
+function flowHtml(t){
+  const f = (window.FLOWS || {})[t.id]; if (!f) return '';
+  return `<section class="sec flowsec" id="${t.id}-flow"><h2>Which pattern? <small>flowchart</small></h2>
+  <ol class="flow"><li class="fstart">Start: read the problem</li>
+  ${f.steps.map(s => `<li class="fq"><div class="q">${esc(s[0])}</div><span class="yes">Yes →</span><a class="ans" href="#${t.id}--${s[1]}">${esc(s[2])}</a><span class="no">No ↓</span></li>`).join('')}
+  <li class="fend"><b>Otherwise:</b> ${esc(f.end)}</li></ol></section>`;
+}
+/* short view: one table per section, simple words + key code lines */
+function renderShort(t){
+  let h = `<div class="th"><div class="eyebrow"><span>${esc(t.fam)}</span>${t.step?`<span class="pill acc">${esc(t.step)}</span>`:''}<span class="pill">Short view</span></div><h1>${esc(t.name)}</h1>${t.core?`<p class="core">${t.core}</p>`:''}</div>`;
+  h += flowHtml(t);
+  const secs = t.secs || [], tables = t.tables || [];
+  const nav = [...tables.map(tb => [`${t.id}--${tb.id}`, tb.h, tb.rows.length]), ...secs.map((s,i) => [`${t.id}-sec${i}`, s.h, s.ps.length])];
+  if (nav.length > 1) h += `<div class="secnav" aria-label="Sections">${nav.map(n=>`<button type="button" data-sec="${n[0]}">${esc(n[1])}<span>${n[2]}</span></button>`).join('')}</div>`;
+  tables.forEach(tb => { h += ftable(t, tb); });
+  secs.forEach((s,i) => {
+    h += `<section class="sec" id="${t.id}-sec${i}"><h2>${esc(s.h)}${s.step?`<small>${esc(s.step)}</small>`:''}</h2>
+    <div class="ftw"><table class="ft st"><thead><tr><th>#</th><th>Pattern</th><th>In simple words</th><th>Key code</th><th>Time · Space</th></tr></thead><tbody>
+    ${s.ps.map(p => { const sh = (window.SHORT || {})[p.id] || [strip(p.k), '']; return `<tr id="s-${p.id}">
+      <td class="num" data-l="#">${String(p.n).padStart(2,'0')}</td>
+      <td class="fn" data-l="Pattern"><button type="button" class="tolong" data-long="${p.id}" title="Open the full card">${p.t}</button></td>
+      <td data-l="In simple words">${sh[0]}</td>
+      <td class="fc" data-l="Key code">${sh[1] ? `<pre class="jc">${hl(dedent(sh[1]))}</pre>` : ''}</td>
+      <td class="m" data-l="Time · Space"><code>${esc(p.tc||'—')}</code><br><code>${esc(p.sc||'—')}</code></td></tr>`; }).join('')}
+    </tbody></table></div></section>`;
+  });
+  if (t.after) h += t.after;
+  h += `<p class="foot">Short view. Click a pattern name, or switch to Long view at the top, for the full explanation, diagram and complete code.</p>`;
+  return h;
+}
 function renderTopic(t){
-  let h = `<div class="th"><div class="eyebrow"><span>${esc(t.fam)}</span>${t.step?`<span class="pill acc">${esc(t.step)}</span>`:''}${t.count?`<span class="pill">${t.count} patterns</span>`:''}</div><h1>${esc(t.name)}</h1>${t.core?`<p class="core">${t.core}</p>`:''}</div>`;
+  if (view === 'short' && ((t.secs||[]).length)) return renderShort(t);
+  let h =`<div class="th"><div class="eyebrow"><span>${esc(t.fam)}</span>${t.step?`<span class="pill acc">${esc(t.step)}</span>`:''}${t.count?`<span class="pill">${t.count} patterns</span>`:''}</div><h1>${esc(t.name)}</h1>${t.core?`<p class="core">${t.core}</p>`:''}</div>`;
   if (t.recall) h += `<div class="recall"><h3>Quick recall</h3><ul>${t.recall.map(x=>`<li>${x}</li>`).join('')}</ul></div>`;
   if (t.html) h += t.html;
-  const secs = t.secs || [];
-  if (secs.length > 1) h += `<div class="secnav" aria-label="Sections">${secs.map((s,i)=>`<button type="button" data-sec="${t.id}-sec${i}">${esc(s.h)}<span>${s.ps.length}</span></button>`).join('')}</div>`;
+  h += flowHtml(t);
+  const secs = t.secs || [], tables = t.tables || [];
+  const nav = [...tables.map(tb => [`${t.id}--${tb.id}`, tb.h, tb.rows.length]), ...secs.map((s,i) => [`${t.id}-sec${i}`, s.h, s.ps.length])];
+  if (nav.length > 1) h += `<div class="secnav" aria-label="Sections">${nav.map(n=>`<button type="button" data-sec="${n[0]}">${esc(n[1])}<span>${n[2]}</span></button>`).join('')}</div>`;
+  tables.forEach(tb => { h += ftable(t, tb); });
   secs.forEach((s,i) => { h += `<section class="sec" id="${t.id}-sec${i}"><h2>${esc(s.h)}${s.step?`<small>${esc(s.step)}</small>`:''}</h2>${s.d?`<p class="sd">${s.d}</p>`:''}<div class="cards">${s.ps.map(card).join('')}</div></section>`; });
   if (t.after) h += t.after;
   h += `<p class="foot">Press <kbd>/</kbd> to search from anywhere. Code blocks are templates: rename variables to fit the problem and re-derive the complexity from your loops.</p>`;
@@ -5235,8 +6038,8 @@ function show(t, cardId){
     if (!cardId) window.scrollTo(0,0);
   }
   if (cardId){
-    const el = document.getElementById(cardId);
-    if (el){ requestAnimationFrame(()=>{ el.scrollIntoView({block:'start'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); });
+    const el = (view === 'short' && document.getElementById('s-' + cardId)) || document.getElementById(cardId);
+    if (el){ setTimeout(()=>{ el.scrollIntoView({block:'start'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }, 0);
       if (!booted && document.fonts && document.fonts.ready) document.fonts.ready.then(()=>el.scrollIntoView({block:'start'})); }
   }
 }
@@ -5261,9 +6064,20 @@ page.addEventListener('click', e => {
   }
   const sb = e.target.closest('[data-sec]');
   if (sb){ const s = document.getElementById(sb.dataset.sec); if (s) s.scrollIntoView({block:'start'}); return; }
+  const tl = e.target.closest('[data-long]');
+  if (tl){ setView('long'); go(tl.dataset.long); return; }
   const j = e.target.closest('[data-go]');
   if (j){ e.preventDefault(); go(j.dataset.go); }
 });
+
+/* ---- short / long view ---- */
+function setView(v){
+  if (v === view) return;
+  view = v; store.set('view', v);
+  document.querySelectorAll('#viewSw button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+  if (cur){ const t = cur; cur = null; const y = scrollY; show(t, null); window.scrollTo(0, Math.min(y, 0)); }
+}
+document.querySelectorAll('#viewSw button').forEach(b => { b.setAttribute('aria-pressed', String(b.dataset.v === view)); b.addEventListener('click', () => setView(b.dataset.v)); });
 
 /* ---- code toggle ---- */
 const codeBtn = $('#codeAll');
@@ -5291,6 +6105,8 @@ T.forEach(t => {
   IDX.push({ type:'topic', t, title:t.name, sub:'Topic · ' + t.fam + (t.step ? ' · ' + t.step : ''), hay:(t.name+' '+(t.alias||'')+' '+strip(t.core)).toLowerCase(), probs:[] });
   (t.secs||[]).forEach(s => s.ps.forEach(p => IDX.push({ type:'p', t, p, title:strip(p.t), sub:t.name+' › '+s.h,
     hay:[strip(p.t), s.h, t.name, t.alias||'', strip(p.k), strip(p.d), (p.p||[]).join(' | '), p.tags||'', p.c||''].join(' ').toLowerCase().replace(/−/g,'-'), probs:p.p||[] })));
+  (t.tables||[]).forEach(tb => tb.rows.forEach(r => IDX.push({ type:'row', t, target:`${t.id}--${tb.id}`, title:strip(r[0]), sub:t.name+' › '+tb.h,
+    hay:r.map(strip).concat([tb.h, t.name]).join(' ').toLowerCase().replace(/−/g,'-'), probs:[] })));
 });
 const q = $('#q'), res = $('#results'); let hits = [], sel = 0;
 const markIn = (s, words) => { let h = esc(s); words.forEach(w => { if (w.length < 2) return; const r = new RegExp('(' + w.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'ig'); h = h.replace(r, '<mark>$1</mark>'); }); return h; };
@@ -5332,7 +6148,7 @@ function runSearch(){
   }).join('') : `<div class="none">No pattern matches “${esc(q.value)}”. Try a problem name (koko, rotten oranges) or an idea (prefix sum, monotonic).</div>`;
   res.hidden = false;
 }
-function openHit(i){ const it = hits[i]; if (!it) return; res.hidden = true; q.blur(); go(it.type === 'topic' ? it.t.id : it.p.id); }
+function openHit(i){ const it = hits[i]; if (!it) return; res.hidden = true; q.blur(); go(it.type === 'topic' ? it.t.id : it.type === 'row' ? it.target : it.p.id); }
 q.addEventListener('input', runSearch);
 q.addEventListener('focus', () => { if (q.value.trim()) runSearch(); });
 q.addEventListener('keydown', e => {
